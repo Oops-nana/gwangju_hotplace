@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8"/>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+	<title>뚜벅이들을 위한 광주 Hot Place 추천!!</title>
+</head>
+<body>
+	<div id="map" style="width:1000px;height:800px;"></div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c"></script>
+	<script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(35.160085289410176, 126.85144573494203),
+			level: 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+
+        {% comment %} 일반 / 스카이뷰 타입 컨트롤러 {% endcomment %}
+        var mapTypeControl = new kakao.maps.MapTypeControl();
+        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+        
+        {% comment %} 줌 컨트롤러 {% endcomment %}
+        var zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+	</script>
+</body>
+</html>
