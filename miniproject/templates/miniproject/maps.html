@@ -145,7 +145,7 @@
                     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
                     latitude = coords.getLat();
                     longitude = coords.getLng();
-                    panTo(coords);
+                    map.panTo(coords);
                     circle(latitude, longitude);
                 }
             };
@@ -217,11 +217,6 @@
                     strokeStyle : 'dash' // 선 종류
                 });
                 circle.setMap(map);
-            }
-
-            // 입력받은 주소로 지도 이동시키는 함수
-            function panTo(loc) {
-                map.panTo(loc);
             }
 
             // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
