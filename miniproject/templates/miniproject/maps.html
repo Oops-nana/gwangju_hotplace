@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c&libraries=services,clusterer,drawing"></script>
 	    <title>뚜벅이들을 위한 광주 Hot Place 추천!!</title>
         
         <style>
@@ -113,7 +113,7 @@
             </table>
         </div>
 
-	    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c"></script>
+	    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c&libraries=services,clusterer,drawing"></script>
         
 	    <script>
             var latitude = 35.160085289410176; // 위도
@@ -147,17 +147,17 @@
             var zoomControl = new kakao.maps.ZoomControl();
             map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-            // 주소로 좌표 검색해서 중심 이동
-            //var geocoder = new kakao.maps.services.Geocoder();
-            //var callback = function(result, status){
-            //    if(status == kakao.maps.services.Status.OK){
-            //        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-            //        panTo(coords);
-            //    }
-            //};
-            //document.getElementById("searchBtn").addEventListener("click", () => {
-            //    geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', callback);
-            //});
+            // 주소로 좌표 검색해서 지도 중심 이동
+            var geocoder = new kakao.maps.services.Geocoder();
+            var callback = function(result, status){
+                if(status == kakao.maps.services.Status.OK){
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    panTo(coords);
+                }
+            };
+            document.getElementById("searchBtn").addEventListener("click", () => {
+                geocoder.addressSearch(document.getElementById("address").value, callback);
+            });
 
             // 마커 표시 위치
             var positions = [
@@ -211,10 +211,10 @@
                 //kakao.maps.event.addListener(marker, 'click', () => {setCenter();});
             }
 
-            //function panTo(loc) {
-            //    // var loc = kakao.maps.LatLng(35.15830536, 126.8575559);
-            //    map.panTo(loc);
-            //}
+            // 입력받은 주소로 지도 이동시키는 함수
+            function panTo(loc) {
+                map.panTo(loc);
+            }
 
             // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
             function makeOverListener(map, marker, infowindow) {
