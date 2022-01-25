@@ -1,6 +1,103 @@
 <!DOCTYPE html>
 
 <html>
+<<<<<<< HEAD
+<head>
+   <meta charset="utf-8"/>
+  
+   <title>뚜벅이들을 위한 광주 Hot Place 추천!!</title>
+
+</head>
+<body><input class="inputsearch" type = "text" placeholder = "입력하세요.">
+    <button class="seachbtn">검색</button>
+        <div id="map" style="width:1000px;height:600px;position:relative;overflow:hidden;">
+        
+        </div>   
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c&libraries=services,clusterer"></script>
+ 
+ <script>
+     console.log("map 자바스크립트")
+     var container = document.getElementById('map');
+      var options = {
+         center: new kakao.maps.LatLng(35.160085289410176, 126.85144573494203),
+         level: 3
+      };
+
+      var map = new kakao.maps.Map(container, options);
+
+
+     let searchbtn = document.querySelector(".seachbtn");
+     let inputsearch;
+ 
+     searchbtn.addEventListener("click",()=>{
+        
+        inputsearch =   document.querySelector('.inputsearch').value;
+         console.log(inputsearch  );
+         var geocoder = new kakao.maps.services.Geocoder();
+
+// 장소 검색 객체를 생성합니다
+var ps = new kakao.maps.services.Places(); 
+var searchOption = {
+    //요기에 현재위치 넣어주기~~~!
+        location: new kakao.maps.LatLng(35.160085289410176, 126.85144573494203), 
+        radius: 1000,
+        size: 5
+    };
+
+// 키워드로 장소를 검색합니다
+ps.keywordSearch(inputsearch, placesSearchCB,searchOption); 
+
+// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+function placesSearchCB (data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        var bounds = new kakao.maps.LatLngBounds();
+
+        for (var i=0; i<data.length; i++) {
+            displayMarker(data[i]);    
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        }       
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+    } 
+}
+
+// 지도에 마커를 표시하는 함수입니다
+function displayMarker(place) {
+    
+    // 마커를 생성하고 지도에 표시합니다
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(place.y, place.x) 
+    });
+
+    // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'click', function() {
+        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+        infowindow.open(map, marker);
+    });
+ 
+        
+}
+     })
+        // // 일반-스카이뷰 타입 컨트롤러
+        // var mapTypeControl = new kakao.maps.MapTypeControl();
+        // map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+        
+        // // 줌 컨트롤러
+        // var zoomControl = new kakao.maps.ZoomControl();
+        // map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+        // 주소-좌표 변환 객체를 생성합니다
+
+ 
+   </script>
+</body>
+=======
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -247,4 +344,5 @@
 
 	    </script>
     </body>
+>>>>>>> 5a6d900ecedbe0c7c4da4ce76e5430769e69a00f
 </html>
