@@ -128,16 +128,7 @@
 		    var map = new kakao.maps.Map(container, options);
 
             // 지도에 1km 점선 원 표시
-            var circle = new kakao.maps.Circle({
-                map : map,
-                center : new kakao.maps.LatLng(latitude, longitude), // 중심 좌표
-                radius : 1000, // 반경
-                strokeWeight : 2, // 선 두께
-                strokeColor : '#0000FF', // 색 코드
-                strokeOpacity : 0.3, // 불투명도
-                strokeStyle : 'dash' // 선 종류
-            });
-            circle.setMap(map);
+            circle(latitude, longitude);
 
             // 일반-스카이뷰 타입 컨트롤러
             var mapTypeControl = new kakao.maps.MapTypeControl();
@@ -152,7 +143,10 @@
             var callback = function(result, status){
                 if(status == kakao.maps.services.Status.OK){
                     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    latitude = coords.getLat();
+                    longitude = coords.getLng();
                     panTo(coords);
+                    circle(latitude, longitude);
                 }
             };
             document.getElementById("searchBtn").addEventListener("click", () => {
@@ -209,6 +203,20 @@
                 // 마커 클릭 이벤트 등록(클릭 시 팝업창 뜨도록 함수 수정)
                  kakao.maps.event.addListener(marker, 'click', () => {openNav();});
                 //kakao.maps.event.addListener(marker, 'click', () => {setCenter();});
+            }
+
+            // 원 그리는 함수
+            function circle(lat, lgt) {
+                var circle = new kakao.maps.Circle({
+                    map : map,
+                    center : new kakao.maps.LatLng(lat, lgt), // 중심 좌표
+                    radius : 1000, // 반경
+                    strokeWeight : 2, // 선 두께
+                    strokeColor : '#0000FF', // 색 코드
+                    strokeOpacity : 0.3, // 불투명도
+                    strokeStyle : 'dash' // 선 종류
+                });
+                circle.setMap(map);
             }
 
             // 입력받은 주소로 지도 이동시키는 함수
