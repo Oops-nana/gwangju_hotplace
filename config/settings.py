@@ -125,3 +125,5 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL = '/miniproject/login/'
+LOGOUT_REDIRECT_URL = '/member/login/'
+
