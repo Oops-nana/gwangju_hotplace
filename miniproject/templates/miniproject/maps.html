@@ -3,23 +3,128 @@
 <html>
     <head>
         <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
 	    <title>뚜벅이들을 위한 광주 Hot Place 추천!!</title>
+        
+        <style>
+            .maps {
+                position: relative;
+                left: 300px;
+                width: 1300px;
+                height: 900px;
+            }
+            .search {
+                position: absolute;
+                top: 50px;
+                left: 500px;
+                width: 500px;
+                height: 50px;
+                z-index: 2;
+            }
+            body {
+                font-family: "Lato", sans-serif;
+            }
+            
+            .sidebar {
+                height: 100%;
+                width: 0;
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                background-color: #a2a2a2; /* 사이드바 배경 색깔 */
+                overflow-x: hidden;
+                transition: 0.5s;
+                padding-top: 60px;
+            }
+            
+            /* 사이드바 글씨 색깔 */
+            .sidebar a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #000000;
+                display: block;
+                transition: 0.3s;
+            }
+            
+            .sidebar a:hover {
+                color: #f1f1f1;
+            }
+            
+            .sidebar .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-left: 50px;
+            }
+            
+            .openbtn {
+                font-size: 20px;
+                cursor: pointer;
+                background-color: #111;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+            }
+            
+            .openbtn:hover {
+                background-color: #444;
+            }
+            
+            #main {
+                transition: margin-left .5s;
+                padding: 16px;
+            }
+    
+            @media screen and (max-height: 450px) {
+                .sidebar {padding-top: 15px;}
+                .sidebar a {font-size: 18px;}
+            }
+        </style>
+
     </head>
     
     <body>
-        <div id="map" style="width:1000px;height:800px;"></div>
+        {% comment %} 지도 생성 {% endcomment %}
+        <div class="maps">
+            <div id="map" style="width:100%;height:100%;position:relative;"></div>
+        </div>
+        
+        {% comment %} 사이드바 생성 {% endcomment %}
+        <div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <a href="#">지도홈</a>
+            <a href="#">즐겨찾기</a>
+            <a href="#">댓글 / 평점</a>
+            <a href="#">더보기</a>
+        </div>
+
+        {% comment %} 검색창 생성 {% endcomment %}
+        <div class="search">
+            <table>
+                <tr>
+                    <td>주소</td>
+                    <td><input type="text" name="detailAddress" id="address"></td>
+                    <td><button type="button" id="searchBtn">검색</button></td>
+                </tr>
+            </table>
+        </div>
+
 	    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c"></script>
+        
 	    <script>
             var latitude = 35.160085289410176; // 위도
             var longitude = 126.85144573494203; // 경도
-            // 지도 생성
+
+            // 중심좌표로 지도 이동
 		    var container = document.getElementById('map');
 		    var options = {
 			    center: new kakao.maps.LatLng(latitude, longitude),
 			    level: 3
 		    };
-
 		    var map = new kakao.maps.Map(container, options);
 
             // 지도에 1km 점선 원 표시
@@ -41,6 +146,18 @@
             // 줌 컨트롤러
             var zoomControl = new kakao.maps.ZoomControl();
             map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+            // 주소로 좌표 검색해서 중심 이동
+            //var geocoder = new kakao.maps.services.Geocoder();
+            //var callback = function(result, status){
+            //    if(status == kakao.maps.services.Status.OK){
+            //        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            //        panTo(coords);
+            //    }
+            //};
+            //document.getElementById("searchBtn").addEventListener("click", () => {
+            //    geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', callback);
+            //});
 
             // 마커 표시 위치
             var positions = [
@@ -90,8 +207,14 @@
                 kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
                 
                 // 마커 클릭 이벤트 등록(클릭 시 팝업창 뜨도록 함수 수정)
-                //kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+                 kakao.maps.event.addListener(marker, 'click', () => {openNav();});
+                //kakao.maps.event.addListener(marker, 'click', () => {setCenter();});
             }
+
+            //function panTo(loc) {
+            //    // var loc = kakao.maps.LatLng(35.15830536, 126.8575559);
+            //    map.panTo(loc);
+            //}
 
             // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
             function makeOverListener(map, marker, infowindow) {
@@ -105,6 +228,18 @@
                 return function() {
                     infowindow.close();
                 };
+            }
+
+            // 
+            function openNav() {
+                document.getElementById("mySidebar").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+            
+            // 
+            function closeNav() {
+                document.getElementById("mySidebar").style.width = "0";
+                document.getElementById("main").style.marginLeft= "0";
             }
 
 	    </script>
