@@ -31,7 +31,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    << << << < HEAD
     'bootstrap4',
+    == == == =
+    'member',
+    >>>>>> > 77b8262afd0682381a9659317d13121bbf77a4e0
     'miniproject',
     'main',
     'django.contrib.admin',
