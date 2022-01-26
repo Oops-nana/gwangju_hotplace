@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>로그인&회원가입</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'><link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<p class="tip">로그인 또는 회원가입을 해주세요.</p>
+<div class="cont">    
+  <form method="post">
+      {% csrf_token %}
+  <div class="form sign-in">
+    <h2>어서오세요!</h2>
+      <label>
+      <span>ID</span>
+      <input type="charset" name="user_id"/>
+    </label>
+    <label>
+      <span>비밀번호</span>
+      <input type="password" name="password"/>
+    </label>
+    <p class="forgot-pass">비밀번호를 잊어버리셨나요?</p>
+    <button type="submit" class="submit">로그인</button>
+  </div>
+</form>
+  <div class="sub-cont">
+    <div class="img">
+      <div class="img__text m--up">
+        <h2>처음 인가요?</h2>
+        <p>가입을 한 다음 저희 사이트를 이용해주세요!</p>
+      </div>
+      <div class="img__text m--in">
+        <h2>회원이신가요?</h2>
+        <p>이미 계정이 있는 경우 로그인하면 됩니다. 보고 싶었습니다!</p>
+      </div>
+      <div class="img__btn">
+        <span class="m--up">회원가입</span>
+        <span class="m--in">로그인</span>
+      </div>
+    </div>
+    <form method="post"  action="{% url 'member:login' %}" >
+      {% csrf_token %}
+    <div class="form sign-up">
+      <h2>환영합니다!</h2>
+      <label>
+        <span>ID</span>
+        <input type="text" name="user_id"/>
+      </label>
+      <label>
+        <span>비밀번호</span>
+        <input type="text" name="password"/>
+      </label>
+      <label>
+        <span>이름</span>
+        <input type="text" name="user_name"/>
+      </label>
+      <button type="submit" class="submit">회원가입</button>
+    </div>
+  </form>
+  </div>
+</div>
+
+<!-- partial -->
+  <script  src="{% static 'js/script.js'%}"></script>
+
+</body>
+</html>
