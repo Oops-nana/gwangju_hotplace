@@ -26,5 +26,6 @@ def login(request):
     else:
         return render(request, 'member/login_custom.html')
 
+
 def index(request):
     return render(request, 'miniproject/index.html')
