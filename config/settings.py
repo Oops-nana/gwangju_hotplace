@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'member',
     'miniproject',
     'main',
     'django.contrib.admin',
@@ -83,14 +84,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
     
 # }
 DATABASES = {
-'default': {
-'ENGINE': 'django.db.backends.mysql',
-'NAME': 'hotplace2',
-'USER': 'root',
-'PASSWORD': 'bestforall1',
-'HOST': '127.0.0.1',
-'PORT': '3306',
-}
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'aaa',
+        'USER': 'root',
+        'PASSWORD': 'aivle',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
 }
 
 
@@ -136,4 +137,3 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-LOGIN_REDIRECT_URL = '/miniproject/login/'
