@@ -118,13 +118,21 @@
 	    <script>
             var latitude = 35.160085289410176; // 사용자 현재 위도
             var longitude = 126.85144573494203; // 사용자 현재 경도
-            //var latitude = getLocation().getLat();
-            //var longitude = getLocation().getLng();
-            getLocation();
-            navigator.geolocation.getCurrentPosition(showLocation);
-            console.log(navigator.geolocation.getCurrentPosition(showLocation));
-            console.log(getLocation());
-            console.log(latitude, longitude);
+            function onGeolocationSuccess(position){
+                console.log("lat:" + position.coords.latitude +", lon:" + position.coords.longitude);
+            }
+            function onGeolocationFail(error){
+                console.log("Error Code:" + error.code + ", Error Description:" + error.message);
+            }
+            if(navigator.gelocation)
+            {
+                var positionOptions ={
+                    enableHighAccuracy:true,
+                    maximumAge:0,
+                    timeout:10000
+                };
+                navigator.geolocation.getCurrentPosition(onGeolocationSuccess, onGeolocationFail, positionOptions);
+            }
 
             // 중심좌표로 지도 이동
 		    var container = document.getElementById('map');
@@ -255,7 +263,9 @@
 
             //사용자 위치 함수
             function getLocation() {
-                navigator.geolocation.getCurrentPosition(showLocation);
+                if(navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(showLocation);
+                }
             }
             function showLocation(position) {
                 latitude = position.coords.latitude;
