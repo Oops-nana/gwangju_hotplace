@@ -1,65 +1,67 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
-
-<head>
-  <title>로그인</title>
-</head>
-
-<div class="container-fluid ps-md-0">
-  <form method="post" class="post-form" action="{% url 'miniproject:login' %}">
-    {% csrf_token %}
-    {% include "form_errors.html" %}
-    <div class="row g-0">
-      <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
-      <div class="col-md-8 col-lg-6">
-        <div class="login d-flex align-items-center py-5">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-9 col-lg-8 mx-auto">
-                <h3 class="login-heading mb-4">Welcome back!</h3>
-  
-                <!-- Sign In Form -->
-                <form>
-                  <div class="form-floating mb-3">
-                    <input type="id" class="form-control" id="user_id" placeholder="Id">
-                    <label for="floatingInput">Id</label>
-                  </div>
-                  <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Password</label>
-                  </div>
-  
-                  <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                    <label class="form-check-label" for="rememberPasswordCheck">
-                      Remember password
-                    </label>
-                  </div>
-  
-                  <div class="d-grid">
-                    <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
-                    <div class="text-center">
-                      <a class="small" href="#">Forgot password?</a>
-                    </div>
-                  </div>
-  
-                </form>
-
-
-                {% if user.is_authenticated %}
-                <p>
-                  <a class='nav-link' href="{% url 'member:logout' %}">
-                    {{ user.username }} 님 반갑습니다. (로그아웃)
-                  </a>
-                </p>
-                {% else %}
-                <p>현재 상태 : Guest</p>
-                {% endif %}
-
-              </div>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>로그인&회원가입</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <p class="tip">로그인 또는 회원가입을 해주세요.</p>
+    <div class="cont">
+      <div class="form sign-in">
+        <h2>어서오세요!</h2>
+        <label>
+          <span>이메일</span>
+          <input type="email" />
+        </label>
+        <label>
+          <span>비밀번호</span>
+          <input type="password" />
+        </label>
+        <p class="forgot-pass">비밀번호를 잊어버리셨나요?</p>
+        <button type="button" class="submit">로그인</button>
+      </div>
+      <div class="sub-cont">
+        <div class="img">
+          <div class="img__text m--up">
+            <h2>처음 인가요?</h2>
+            <p>가입을 한 다음 저희 사이트를 이용해주세요!</p>
           </div>
+          <div class="img__text m--in">
+            <h2>회원이신가요?</h2>
+            <p>이미 계정이 있는 경우 로그인하면 됩니다. 보고 싶었습니다!</p>
+          </div>
+          <div class="img__btn">
+            <span class="m--up">회원가입</span>
+            <span class="m--in">로그인</span>
+          </div>
+        </div>
+        <div class="form sign-up">
+          <h2>환영합니다!</h2>
+          <label>
+            <span>이름</span>
+            <input type="text" />
+          </label>
+          <label>
+            <span>이메일</span>
+            <input type="email" />
+          </label>
+          <label>
+            <span>비밀번호</span>
+            <input type="password" />
+          </label>
+          <button type="button" class="submit">회원가입</button>
         </div>
       </div>
     </div>
-</div>
+
+    <!-- partial -->
+    <script src="{% static 'js/script.js'%}"></script>
+  </body>
+</html>

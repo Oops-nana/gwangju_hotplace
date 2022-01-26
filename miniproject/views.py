@@ -2,8 +2,12 @@ from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
+import miniproject
+
+
 def maps(request):
     return render(request, 'miniproject/maps.html')
+
 
 def login(request):
     if request.method == 'POST':
@@ -18,6 +22,10 @@ def login(request):
             request.session['user_name'] = m.user_name
 
         # 회원정보 조회 실패 시 예외 발생
-        return redirect('member:login')
+        return redirect('miniproject:login')
     else:
         return render(request, 'member/login_custom.html')
+
+
+def index(request):
+    return render(request, 'miniproject/index.html')
