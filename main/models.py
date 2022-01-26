@@ -2,7 +2,7 @@ from cgitb import text
 from pyexpat import model
 from django.db import models
 from sqlalchemy import null
-from django.contrib.gis.db.models.functions import Distance
+# from django.contrib.gis.db.models.functions import Distance
 # Create your models here.
 class CommonPlace(models.Model):
     place_id = models.BigIntegerField(primary_key=True)
