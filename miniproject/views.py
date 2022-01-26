@@ -1,23 +1,30 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import auth
+from .models import Member
+from django.utils import timezone
 
 def maps(request):
     return render(request, 'miniproject/maps.html')
 
-# 회원 가입
+def index(request):
+    return render(request, 'miniproject/index.html')
+
 def signup(request):
-    # signup 으로 POST 요청이 왔을 때, 새로운 유저를 만드는 절차를 밟는다.
     if request.method == 'POST':
-        # password와 confirm에 입력된 값이 같다면
-        if request.POST['password'] == request.POST['confirm']:
-            # user 객체를 새로 생성
-            user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
-            # 로그인 한다
-            auth.login(request, user)
-            return redirect('/')
-    # signup으로 GET 요청이 왔을 때, 회원가입 화면을 띄워준다.
-    return render(request, 'miniproject/signup.html')
+        user_id = request.POST.get('user_id')
+        user_pw = request.POST.get('user_pw')
+        user_name = request.POST.get('user_name')
+        m = Member(
+            user_id=user_id, user_pw=user_pw, user_name=user_name)
+        m.date_joined = timezone.now()
+        m.save()
+        return HttpResponse(
+            '가입 완료<br>%s %s %s' % (user_id, user_pw, user_name))
+    else:
+        return render(request, 'miniproject/signup.html')
+
 
 # 로그인
 def login(request):

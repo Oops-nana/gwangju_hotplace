@@ -6,6 +6,9 @@
 </head>
 
 <div class="container-fluid ps-md-0">
+  <form method="post" class="post-form" action="{% url 'miniproject:login' %}">
+    {% csrf_token %}
+    {% include "form_errors.html" %}
     <div class="row g-0">
       <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
       <div class="col-md-8 col-lg-6">
@@ -18,8 +21,8 @@
                 <!-- Sign In Form -->
                 <form>
                   <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Email address</label>
+                    <input type="id" class="form-control" id="user_id" placeholder="Id">
+                    <label for="floatingInput">Id</label>
                   </div>
                   <div class="form-floating mb-3">
                     <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
@@ -42,6 +45,18 @@
                   </div>
   
                 </form>
+
+
+                {% if user.is_authenticated %}
+                <p>
+                  <a class='nav-link' href="{% url 'member:logout' %}">
+                    {{ user.username }} 님 반갑습니다. (로그아웃)
+                  </a>
+                </p>
+                {% else %}
+                <p>현재 상태 : Guest</p>
+                {% endif %}
+
               </div>
             </div>
           </div>
