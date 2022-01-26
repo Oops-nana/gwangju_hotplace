@@ -125,5 +125,4 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-LOGIN_REDIRECT_URL = '/member/login/'
-LOGOUT_REDIRECT_URL = '/member/login/'
+LOGIN_REDIRECT_URL = '/miniproject/login/'
