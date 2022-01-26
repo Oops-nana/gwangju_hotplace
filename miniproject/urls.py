@@ -12,5 +12,12 @@ urlpatterns = [
         ),
         name='login'
     ),
+    
     path('test/', views.test, name = 'test'),
+
+    path('logout/',
+        auth_views.LogoutView.as_view(),
+        name='logout'
+        ),
+    path('index/', views.index, name = 'index'),
 ]
