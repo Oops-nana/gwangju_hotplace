@@ -5,19 +5,6 @@ from . import views
 app_name = 'miniproject'
 
 urlpatterns = [
-<<<<<<< HEAD
-    path('maps/', views.maps, name = 'maps'),
-    path('login/', auth_views.LoginView.as_view(
-        template_name = 'miniproject/login.html'),
-         name = 'login'
-         ),
-    path('logout/', auth_views.LoginView.as_view(),
-         name = 'logout'
-         ),
-    path('signup/', views.signup, name = 'signup'),
-    path('index/', views.index, name = 'index'),
-]
-=======
     path('maps/', views.maps, name='maps'),
     path('login/',
          auth_views.LoginView.as_view(
@@ -28,8 +15,7 @@ urlpatterns = [
 
     path('logout/',
          auth_views.LogoutView.as_view(),
-         nme='logout'
+         name='logout'
          ),
     path('index/', views.index, name='index'),
 ]
->>>>>>> gwj

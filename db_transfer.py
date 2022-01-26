@@ -1,7 +1,6 @@
 from datetime import datetime
 import imp
 from django.template import engine
-import pymysql
 from datetime import datetime
 from numpy import eye
 import requests

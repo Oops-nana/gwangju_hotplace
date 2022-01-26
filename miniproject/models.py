@@ -4,7 +4,7 @@ from django.db import models
 
 class Member(models.Model):
     user_name = models.CharField(verbose_name = '이름', max_length=300)
-    user_id = models.CharField(verbose_name = '아이디', max_length=300, primary_key=True)
+    user_id = models.CharField(verbose_name = '아이디', max_length=250, primary_key=True)
     user_pw = models.CharField(verbose_name = '비밀번호', max_length=300)
     user_email = models.EmailField(verbose_name = '이메일', max_length = 128, unique = True, default ='')
     LOCATION = (
