@@ -1,9 +1,8 @@
-from cgitb import text
-from pyexpat import model
 from django.db import models
-from sqlalchemy import null
-from django.contrib.gis.db.models.functions import Distance
+
 # Create your models here.
+
+
 class CommonPlace(models.Model):
     place_id = models.BigIntegerField(primary_key=True)
     place_name = models.TextField(null=True)
@@ -14,14 +13,20 @@ class CommonPlace(models.Model):
     info = models.BigIntegerField(null=True)
     rate = models.IntegerField(null=True)
 
-    class Meta :
+    class Meta:
         db_table = 'place_common'
         app_label = 'main'
-        managed = False 
+        managed = False
+
+    def place_count_by_count():
+        count = CommonPlace.objects.all().count()
+        return count
+
 
 class museumDetail(models.Model):
     # commonplace = models.ForeignKey(CommonPlace, on_delete=models.SET_NULL, null = True, db_column='place_id')
-    place_id = models.OneToOneField(CommonPlace, primary_key=True,db_column='place_id', on_delete=models.CASCADE)
+    place_id = models.OneToOneField(
+        CommonPlace, primary_key=True, db_column='place_id', on_delete=models.CASCADE)
     website = models.TextField(null=True)
     week_begin = models.TextField(null=True)
     week_end = models.TextField(null=True)
@@ -29,8 +34,6 @@ class museumDetail(models.Model):
     holiday_end = models.TextField(null=True)
     close_info = models.TextField(null=True)
 
-    class Meta :
+    class Meta:
         db_table = 'museum_detail'
         managed = False
-
-

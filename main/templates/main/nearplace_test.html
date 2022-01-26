@@ -1,0 +1,35 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      var cookies = document.cookie.split(";");
+
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  {% comment %} 현재 위도,경도 동적으로 받아오기 {% endcomment %}
+  const csrftoken = getCookie('csrftoken');
+  let lat = 35.08945325
+  let lng = 126.8484326
+  let distance = 7
+  const postData = {'startLat' : lat, 'startLng':lng, 'distance':distance}
+  const data = axios({
+      url: "/main/findnear/",
+      method: 'post',
+      data : JSON.stringify(postData),
+      haeder : {
+          'Content-Type' : 'application/json',
+          'X-CSRFToken' : csrftoken
+      });
+      data.then(function (result) {
+      console.log(result.data);
+      });
+</script>

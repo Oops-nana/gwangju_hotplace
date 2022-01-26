@@ -2,10 +2,13 @@ from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
+import miniproject
+
+
 def maps(request):
     return render(request, 'miniproject/maps.html')
 
-<<<<<<< HEAD
+
 def login(request):
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
@@ -22,7 +25,3 @@ def login(request):
         return redirect('member:login')
     else:
         return render(request, 'member/login_custom.html')
-=======
-def test(request):
-    return render(request, 'miniproject/test.html')
->>>>>>> 5a6d900ecedbe0c7c4da4ce76e5430769e69a00f
