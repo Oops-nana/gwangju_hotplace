@@ -1,70 +1,52 @@
 {% load static %}
-<!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>메인 페이지</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{% static 'css/main.css' %}" />
-	</head>
-	<body class="is-preload">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
+<head>
+  <meta charset="utf-8">
+  <title>메인 페이지</title>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <script src="https://kit.fontawesome.com/b0ef0a4fe9.js" crossorigin="anonymous"></script>
+</head>
 
-							<!-- Header -->
-								<header id="header">
-									<a href="http://127.0.0.1:8000/miniproject/login/" class="logo" >로그아웃</a>
-								</header>
-							<!-- Banner -->
-								<section id="banner">
-									<div class="content">
-									</div>
-								</section>
-						</div>
-					</div>
+<body>
+  <!-- 검색창 -->
+  <div class="header">
+    <div class="search-box">
+      <input class="search-txt" type="text" name="" placeholder="입력하세요">
+      <a class="search-btn" href="#">
+        <i class="fas fa-search"></i>
+      </a>
+    </div>
 
-				<!-- 사이드바 -->
-					<div id="sidebar">
-						<div class="inner">
+    <!-- 로그아웃 버튼 -->
+    <div class="logout" type="button" name="">
+      <a class="logout-btn" href="http://127.0.0.1:8000/miniproject/login/">
+        <i class="fas fa-sign-out-alt"></i>
+      </a>
+    </div>
 
-							<!-- 검색창 -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
+    <!-- 사이드바 버튼 -->
+    <input type="checkbox" id="check">
+    <label for="check">
+      <i class="fas fa-bars" id="btn"></i>
+      <i class="fas fa-times" id="cancel"></i>
+    </label>
 
-							<!-- 메뉴 -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="generic.html">Generic</a></li>
-										<li><a href="elements.html">Elements</a></li>
-									</ul>
-								</nav>
-						</div>
-					</div>
-			</div>
+    <!-- 사이드바 -->
+    <div class="sidebar">
+      <header>My App</header>
+      <ul>
+        <li><a href="#"><i class="fas fa-qrcode"></i>1</a></li>
+        <li><a href="#"><i class="fas fa-link"></i>2</a></li>
+        <li><a href="#"><i class="fas fa-stream"></i>3</a></li>
+        <li><a href="#"><i class="fas fa-calendar-week"></i>4</a></li>
+        <li><a href="#"><i class="far fa-question-circle"></i>5</a></li>
+      </ul>
+    </div>
+  </div>
+  <section></section>
+</body>
 
-		<!-- Scripts -->
-		<script src="{% static 'js/jquery.min.js' %}"></script>
-		<script src="{% static 'js/browser.min.js' %}"></script>
-		<script src="{% static 'js/breakpoints.min.js' %}"></script>
-		<script src="{% static 'js/util.js' %}"></script>
-		<script src="{% static 'js/main.js' %}"></script>
-
-	</body>
 </html>
