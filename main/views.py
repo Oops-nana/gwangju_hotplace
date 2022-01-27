@@ -23,9 +23,8 @@ def dictToJson(jsondata):
     return returnJson
 
 
-def joinMuseum():
-
-    sql = "select * from place_common as p left join museum_detail as m on p.place_id = m.place_id where p.place_id >= 3000 and m.place_id >= 3000;"
+def joinMuseum(target: str):
+    sql = f"select * from place_common as p left join museum_detail as m on p.place_id = m.place_id where p.place_id >= 3000 and m.place_id >= 3000 and p.place_name='{target}';"
 
     cursor = connection.cursor()
     cursor.execute(sql)
@@ -125,8 +124,8 @@ def showDetails(request):
         try:
             place_name = request.POST.get('place_name')
             if isMuseumOrGallary(place_name):
-                joined = joinMuseum()
-                print(joined)  # 여기에 3000번 이상의 쿼리를 추가 조인해 넣어준다.
+                joined = joinMuseum(place_name)
+                # 여기에 3000번 이상의 쿼리를 추가 조인해 넣어준다.
                 return JsonResponse(joined, safe=False)
 
             obj = place.objects.filter(place_name=place_name)
@@ -147,9 +146,3 @@ def showDetails(request):
 
 def showDetailsTest(request):
     return render(request, 'main/test.html')
-
-
-def showMuseumDetail():
-    li1 = []
-    CommonPlace.objects.extra(where=["place_id >= 3000"])
-    museumDetail.objects.all()
