@@ -27,15 +27,6 @@ body{
   background: #f1d39c;
   transition: all .5s ease;
 }
-#mySidebar{
-  position: fixed;
-  left: -500px;
-  width: 500px;
-  position: fixed;
-  height: 100%;
-  background: #f1d39c;
-  transition: all .5s ease;
-}
 .sidebar header{
   font-size: 22px;
   color: white;
@@ -44,37 +35,21 @@ body{
   background: #f0b71c;
   user-select: none;
 }
-.sidebar ul a{
-  display: block;
-  height: 100%;
-  width: 100%;
-  line-height: 165px;
-  font-size: 20px;
-  color: white;
-  padding-left: 40px;
-  box-sizing: border-box;
-  border-top: 1px solid white;
-
-  transition: .4s;
-}
 .sidebar ul div{
   height: 100%;
   width: 100%;
-  line-height: 165px;
-  font-size: 20px;
-  color: white;
-  padding-left: 40px;
+  line-height: 65px;
+  font-size: 18px;
+  color: black;
+  padding-left: 20px;
   box-sizing: border-box;
-  border-top: 1px solid white;
-
+  border-top: 5px solid #f0b71c;
   transition: .4s;
 }
 ul li:hover a{
   padding-left: 50px;
 }
-.sidebar ul a i{
-  margin-right: 16px;
-}
+
 .cancel{
   position: absolute;
   top: 15px;

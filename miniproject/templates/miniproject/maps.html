@@ -1,4 +1,3 @@
-{% csrf_token %}
 {% load static %}
 <!DOCTYPE html>
 
@@ -39,7 +38,7 @@
       }
     </style>
   </head>
-
+  {% csrf_token %}
   <body>
     {% comment %} 지도 생성 {% endcomment %}
     <div class="maps">
@@ -78,18 +77,23 @@
         </header>
         <ul>
           <li><img src="https://inmun360.culture.go.kr/upload/board/image/30/2365730_201908140058465150.jpg" alt="이미지 설명" width="500"></li>
-          <li><div id="info">장소 정보, 전화번호, 주소</div></li>
-          <li><div id="runtime">운영 시간</div></li>
-          <li><div id="rate">평균 평점</div></li>
-          <li><div id="comment">댓글</div></li>
+          <li><div id="info"></div></li>
+          <li><div id="runtime"></div></li>
+          <li><div id="rate"></div></li>
+          <li><div id="comment">
+            <form>
+              <label>평가를 남겨주세요!</label><br>
+              <input type="text">
+            </form>
+          </div></li>
         </ul>
       </div>
     </div>
 
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c&libraries=services,clusterer,drawing"
-    ></script>
+    <script 
+      type="text/javascript" 
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c&libraries=services,clusterer,drawing">
+    </script>
 
     <script>
             var latitude = 35.160085289410176; // 사용자 현재 위도
@@ -170,26 +174,10 @@
                         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 
                         // 마커 클릭 이벤트 등록(클릭 시 팝업창 뜨도록 함수 수정)
-                        kakao.maps.event.addListener(marker, 'click', () => {openNav();});
+                        kakao.maps.event.addListener(marker, 'click', () => {
+                          openNav('{{i.place_name}}', "{{i.info}}", "{{i.road_address}}", "{{i.phone}}", '런타임', "{{i.rate}}", '평가');});
                         document.getElementById("check").addEventListener("click", () => {
                           closeNav();
-                        });
-
-                        const csrftoken = getCookie("csrftoken");
-                        const place_name = "{{i.place_name}}";
-                        const formData = new FormData();
-                        formData.append("place_name", "{{i.place_name}}");
-                        const ajax = axios({
-                          url: "/main/request/",
-                          method: "post",
-                          data: formData,
-                          headers: {
-                            "X-CSRFToken": csrftoken,
-                          },
-                        });
-                        ajax.then(function (result) {
-                          datas = result.data;
-                          console.log(datas);
                         });
                     }
                 {% endfor %}
@@ -225,8 +213,28 @@
             }
 
             // 좌측 사이드바 열기
-            function openNav() {
+            function openNav(place_name, info, road_address, phone, runtime, rate, comment) {
                 document.getElementById("mySidebar").style.left = "0";
+                const csrftoken = getCookie("csrftoken");
+                const placename = place_name;
+                const formData = new FormData();
+                formData.append("place_name", place_name);
+                const ajax = axios({
+                    url: "/main/request/",
+                    method: "post",
+                    data: formData,
+                    headers: {
+                        "X-CSRFToken": csrftoken,
+                    },
+                });
+                ajax.then(function (result) {
+                    datas = result.data;
+                    console.log(datas);
+                });
+                document.getElementById("info").innerHTML = "소개 : " + info;
+                document.getElementById("runtime").innerHTML = road_address, phone, runtime;
+                document.getElementById("rate").innerHTML = rate;
+                {% comment %} document.getElementById("comment").innerHTML = comment; {% endcomment %}
             }
 
             // 좌측 사이드바 닫기
@@ -254,43 +262,6 @@
               }
               return cookieValue;
             }
-    </script>
-
-    <script>
-      function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== "") {
-          var cookies = document.cookie.split(";");
-    
-          for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-            }
-          }
-        }
-        return cookieValue;
-      }
-    </script>
-
-    <script>
-      const csrftoken = getCookie("csrftoken");
-      const place_name = "광주김치박물관";
-      const formData = new FormData();
-      formData.append("place_name", place_name);
-      const ajax = axios({
-        url: "/main/request/",
-        method: "post",
-        data: formData,
-        headers: {
-          "X-CSRFToken": csrftoken,
-        },
-      });
-      ajax.then(function (result) {
-        datas = result.data;
-        console.log(datas);
-      });
     </script>
   </body>
 </html>
