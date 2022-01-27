@@ -1,12 +1,15 @@
-
+from django.forms import model_to_dict
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 import json
 from django.shortcuts import render
 
+# Exeptions
+from django.core.exceptions import ObjectDoesNotExist
+
 from django.template import exceptions
-from .models import CommonPlace
+from .models import CommonPlace, museumDetail
 # 위도 lat 30 [0]
 # 경도 lng 100 [1]
 # 클라이언트에서 받아온 경도,위도 정보를 가지고 데이터베이스에 해당하는 모든 경도,위도 중 클라이언트가 설정한 범위 이내에 있는 경도 위도 세트만 반환.
@@ -18,6 +21,28 @@ def dictToJson(jsondata):
     for i in range(len(jsondata)):
         returnJson.append(json.loads(json.dumps(jsondata[i]).encode()))
     return returnJson
+
+
+def joinMuseum():
+
+    sql = "select * from place_common as p left join museum_detail as m on p.place_id = m.place_id where p.place_id >= 3000 and m.place_id >= 3000;"
+
+    cursor = connection.cursor()
+    cursor.execute(sql)
+
+    row = [x[0] for x in cursor.description]
+    data = cursor.fetchall()
+    connection.close()
+
+    resultdata = []
+    jsondata = []
+
+    for result in data:
+        jsondata.append(dict(zip(row, result)))
+        # 딕셔너리를 인코딩하여 json형식으로 변환
+    resultdata.append(dictToJson(jsondata))
+
+    return resultdata
 
 
 def calculateLocation(places, startLat, startLng, distance):
@@ -84,4 +109,47 @@ def requestLocation(request):
     return JsonResponse(result, safe=False)
 
 
+def isMuseumOrGallary(string: str):
+    candidate = ['갤러리', '박물관', '미술관']
+    for i in candidate:
+        if i in string:
+            return True
+    return False
+
+
 # Create your views here.
+@csrf_exempt
+def showDetails(request):
+    place = CommonPlace
+    if request.method == 'POST':
+        try:
+            place_name = request.POST.get('place_name')
+            if isMuseumOrGallary(place_name):
+                joined = joinMuseum()
+                print(joined)  # 여기에 3000번 이상의 쿼리를 추가 조인해 넣어준다.
+                return JsonResponse(joined, safe=False)
+
+            obj = place.objects.filter(place_name=place_name)
+            returnJson = []
+            for o in obj:
+                temp_o = model_to_dict(o)
+                returnJson.append(temp_o)
+        except ObjectDoesNotExist:
+            error = "해당 장소에 대한 결과가 없습니다."
+            error.encode()
+            errorJson = json.loads(json.dumps(error))
+            print(errorJson)
+            return JsonResponse(errorJson, safe=False)
+
+        return JsonResponse(returnJson, safe=False)
+    return HttpResponse("오류")
+
+
+def showDetailsTest(request):
+    return render(request, 'main/test.html')
+
+
+def showMuseumDetail():
+    li1 = []
+    CommonPlace.objects.extra(where=["place_id >= 3000"])
+    museumDetail.objects.all()

@@ -15,7 +15,7 @@
     <!-- partial:index.partial.html -->
     <p class="tip">로그인 또는 회원가입을 해주세요.</p>
     <div class="cont">
-      <form method="post">
+      <form method="post" enctype = "multipart/form-data">
         {% csrf_token %}
       <div class="form sign-in">
           <h2>환영합니다!</h2>
@@ -24,12 +24,16 @@
             <input type="text" name='user_name'/>
           </label>
           <label>
-            <span>이메일</span>
+            <span>ID</span>
             <input type="text" name="user_id"/>
           </label>
           <label>
             <span>비밀번호</span>
             <input type="password" name="password"/>
+          </label>
+          <label>
+            <span>파일</span>
+            <input type="file" name="file">
           </label>
           <button type="submit" class="submit">회원가입</button>
         </div>
