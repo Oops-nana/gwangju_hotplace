@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Member(models.Model):
     user_id = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=50)

@@ -1,11 +1,12 @@
-from marshal import loads
-from black import jupyter_dependencies_are_installed
+from django.forms import model_to_dict
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 import json
-import pymysql.cursors
 from django.shortcuts import render
+
+# Exeptions
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.template import exceptions
 from .models import CommonPlace
@@ -87,3 +88,28 @@ def requestLocation(request):
 
 
 # Create your views here.
+@csrf_exempt
+def showDetails(request):
+    place = CommonPlace
+    if request.method == 'POST':
+        try:
+            place_name = request.POST.get('place_name')
+            print(place_name)
+            obj = place.objects.filter(place_name=place_name)
+            print(obj)
+            returnJson = []
+            for o in obj:
+                temp_o = model_to_dict(o)
+                returnJson.append(temp_o)
+        except ObjectDoesNotExist:
+            error = "해당 장소에 대한 결과가 없습니다."
+            error.encode()
+            errorJson = json.loads(json.dumps(error))
+            return JsonResponse(errorJson, safe=False)
+
+        return JsonResponse(returnJson, safe=False)
+    return HttpResponse("오류")
+
+
+def showDetailsTest(request):
+    return render(request, 'main/test.html')

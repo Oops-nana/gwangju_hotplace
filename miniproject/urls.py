@@ -18,4 +18,6 @@ urlpatterns = [
          name='logout'
          ),
     path('index/', views.index, name='index'),
+
+
 ]
