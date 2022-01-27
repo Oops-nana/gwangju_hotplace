@@ -32,10 +32,10 @@
       console.log(result.data);
       });
 </script>
-{% endcomment %}
+{% endcomment %} ()
 <script>
   const csrftoken = getCookie("csrftoken");
-  const place_name = "평화공원";
+  const place_name = "광주김치박물관";
   const formData = new FormData();
   formData.append("place_name", place_name);
   const ajax = axios({
@@ -47,6 +47,7 @@
     },
   });
   ajax.then(function (result) {
-    console.log(result.data);
+    datas = result.data;
+    console.log(datas);
   });
 </script>
