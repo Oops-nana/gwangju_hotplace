@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Member(models.Model):
-    user_id = models.CharField(max_length=50, unique=True)
+    user_id = models.CharField(max_length=50, unique=True, db_column='user_id')
     password = models.CharField(max_length=50)
     user_name = models.CharField(max_length=50)
     agree = models.BooleanField()

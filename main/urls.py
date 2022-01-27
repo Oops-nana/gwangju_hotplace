@@ -21,5 +21,6 @@ app_name = 'main'
 urlpatterns = [
     path('findnear/', views.requestLocation, name='findnear'),
     path('request/', views.showDetails, name='show_detail'),
+    # path('comment/', views.postComment, name='comment'),
     path('request/test', views.showDetailsTest, name='show_detail_test'),
 ]
