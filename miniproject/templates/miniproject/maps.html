@@ -16,6 +16,8 @@
     ></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>뚜벅이들을 위한 광주 Hot Place 추천!!</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap">
 
     <style>
       .maps {
@@ -68,7 +70,7 @@
         
       <!-- 사이드바 -->
       <div id="mySidebar" class="sidebar">
-        <header>My App
+        <header class="header" id="placename">
           <div class="cancel" type="button" id="check">
             <button class="cancel_btn">
               <i class="fas fa-times" id="cancel"></i>
@@ -175,7 +177,7 @@
 
                         // 마커 클릭 이벤트 등록(클릭 시 팝업창 뜨도록 함수 수정)
                         kakao.maps.event.addListener(marker, 'click', () => {
-                          openNav('{{i.place_name}}', "{{i.info}}", "{{i.road_address}}", "{{i.phone}}", '런타임', "{{i.rate}}", '평가');});
+                          openNav('{{i.place_name}}', "{{i.info}}", "{{i.road_address}}", "{{i.phone}}", '런타임', '별점', '평가');});
                         document.getElementById("check").addEventListener("click", () => {
                           closeNav();
                         });
@@ -231,7 +233,8 @@
                     datas = result.data;
                     console.log(datas);
                 });
-                document.getElementById("info").innerHTML = "소개 : " + info;
+                document.getElementById("placename").innerHTML = place_name;
+                document.getElementById("info").innerHTML = "소개 : <br>" + info;
                 document.getElementById("runtime").innerHTML = road_address, phone, runtime;
                 document.getElementById("rate").innerHTML = rate;
                 {% comment %} document.getElementById("comment").innerHTML = comment; {% endcomment %}
@@ -239,7 +242,7 @@
 
             // 좌측 사이드바 닫기
             function closeNav() {
-                document.getElementById("mySidebar").style.left = "-500px";
+                document.getElementById("mySidebar").style.left = "-600px";
             }
 
             // 두 좌표간 거리 계산

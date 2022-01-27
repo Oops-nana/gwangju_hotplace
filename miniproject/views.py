@@ -9,11 +9,20 @@ import miniproject
 
 def maps(request):
     place = CommonPlace.objects.all()
+    museumdtl = museumDetail.objects.all()
+    
     data = []
+    comment_data = []
+    user_data = []
+    museum_data = []
     for i in place:
         i = model_to_dict(i)
         data.append(i)
-    return render(request, 'miniproject/maps.html', {'data': data})
+    for j in museumdtl:
+        j = model_to_dict(j)
+        museum_data.append(j)
+    return render(request, 'miniproject/maps.html', 
+                  {'data': data, 'museum_data': museum_data})
 
 def test(request):
     place = CommonPlace.objects.all()

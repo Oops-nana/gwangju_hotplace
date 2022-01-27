@@ -10,7 +10,6 @@ class CommonPlace(models.Model):
     lng = models.TextField(null=True)
     road_address = models.TextField(null=True)
     info = models.BigIntegerField(null=True)
-    rate = models.IntegerField(null=True)
 
     class Meta:
         db_table = 'place_common'

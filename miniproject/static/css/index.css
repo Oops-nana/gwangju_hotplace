@@ -4,7 +4,7 @@ body{
   font-family: 'Roboto',sans-serif;
   margin: 0;
   padding: 0;
-  background: #f1d39c;
+  background: rgb(237, 237, 237);
 }
 *{
   margin: 0;
@@ -20,32 +20,45 @@ body{
 /* 사이드바 */
 .sidebar{
   position: fixed;
-  left: -500px;
+  border-color: #2f3640;
+  border-style: solid;
+  border-width: 2px;
+  /* border-radius: 80px; */
+  /* border-top-right-radius: 80px;
+  border-bottom-right-radius: 80px; */
+  left: -600px;
   width: 500px;
-  position: fixed;
   height: 100%;
-  background: #f1d39c;
+  background: rgb(237, 237, 237);
   transition: all .5s ease;
 }
 .sidebar header{
-  font-size: 22px;
+  /* border-top-right-radius: 80px; */
+  /* border-top-left-radius:  80px; */
+  font-size: 50px;
+  /* font-family: 'Dongle', sans-serif; */
+  /* font-weight: bold; */
   color: white;
   text-align: center;
   line-height: 70px;
-  background: #f0b71c;
+  background: #2f3640;
   user-select: none;
 }
 .sidebar ul div{
+  /* font-family: 'Dongle', sans-serif; */
   height: 100%;
   width: 100%;
   line-height: 65px;
-  font-size: 18px;
+  /* max-height: 155px; */
+  /* overflow: auto; */
+  font-size: 30px;
   color: black;
   padding-left: 20px;
   box-sizing: border-box;
-  border-top: 5px solid #f0b71c;
+  border-top: 5px solid #2f3640;
   transition: .4s;
 }
+
 ul li:hover a{
   padding-left: 50px;
 }
@@ -60,7 +73,7 @@ ul li:hover a{
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #2f3640;
+  background: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,7 +83,7 @@ ul li:hover a{
 .search-box{
   position: absolute;
   top: 48px;
-  left: 40%;
+  left: 75%;
   transform: translate(-50%,-50%);
   background: #2f3640;
   height: 40px;
