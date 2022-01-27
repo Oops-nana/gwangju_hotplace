@@ -20,13 +20,13 @@ body{
 /* 사이드바 */
 .sidebar{
   position: fixed;
-  border-color: #2f3640;
-  border-style: solid;
-  border-width: 2px;
+  /* border-color: #2f3640; */
+  /* border-style: solid; */
+  /* border-width: 2px; */
   /* border-radius: 80px; */
   /* border-top-right-radius: 80px;
   border-bottom-right-radius: 80px; */
-  left: -600px;
+  left: -500px;
   width: 500px;
   height: 100%;
   background: rgb(237, 237, 237);
@@ -65,11 +65,13 @@ ul li:hover a{
 
 .cancel{
   position: absolute;
+  z-index: 9;
   top: 15px;
   left: 440px;
 }
 .cancel_btn{
   color: #f0b71c;
+  z-index: 10;
   width: 40px;
   height: 40px;
   border-radius: 50%;
