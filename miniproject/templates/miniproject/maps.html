@@ -1,8 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 
-<html>
+<html lang="en" dir="ltr">
+
   <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script src="https://kit.fontawesome.com/b0ef0a4fe9.js" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script
       type="text/javascript"
@@ -12,10 +16,11 @@
 
     <style>
       .maps {
-        position: relative;
-        left: 300px;
-        width: 1300px;
-        height: 900px;
+        position: fixed;
+        left: 100px;
+        top: 93px;
+        width: 1700px;
+        height: 850px;
       }
       .search {
         position: absolute;
@@ -28,68 +33,6 @@
       body {
         font-family: "Lato", sans-serif;
       }
-
-      .sidebar {
-        height: 100%;
-        width: 0;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #a2a2a2; /* 사이드바 배경 색깔 */
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
-      }
-
-      /* 사이드바 글씨 색깔 */
-      .sidebar a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #000000;
-        display: block;
-        transition: 0.3s;
-      }
-
-      .sidebar a:hover {
-        color: #f1f1f1;
-      }
-
-      .sidebar .closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
-        margin-left: 50px;
-      }
-
-      .openbtn {
-        font-size: 20px;
-        cursor: pointer;
-        background-color: #111;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-      }
-
-      .openbtn:hover {
-        background-color: #444;
-      }
-
-      #main {
-        transition: margin-left 0.5s;
-        padding: 16px;
-      }
-
-      @media screen and (max-height: 450px) {
-        .sidebar {
-          padding-top: 15px;
-        }
-        .sidebar a {
-          font-size: 18px;
-        }
-      }
     </style>
   </head>
 
@@ -99,42 +42,58 @@
       <div id="map" style="width: 100%; height: 100%; position: relative"></div>
     </div>
 
-    {% comment %} 사이드바 생성 {% endcomment %}
-    <div id="mySidebar" class="sidebar">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-      <a href="#">지도홈</a>
-      <a href="#">즐겨찾기</a>
-      <a href="#">댓글 / 평점</a>
-      <a href="#">더보기</a>
-    </div>
+    <!-- 검색창 -->
+    <div class="header">
+      <div class="search-box">
+        <input class="search-txt" type="text" id="address" placeholder="주소를 입력하세요">
+        <button class="search-btn" id="searchBtn">
+            <i class="fas fa-search"></i>
+        </button>
+      </div>
 
-    {% comment %} 검색창 생성 {% endcomment %}
-    <div class="search">
-      <table>
-        <tr>
-          <td>주소</td>
-          <td><input type="text" name="detailAddress" id="address" /></td>
-          <td><button type="button" id="searchBtn">검색</button></td>
-        </tr>
-      </table>
+        <!-- 로그아웃 버튼 -->
+      <div class="logout" type="button" name="">
+        <a class="logout-btn" href="http://127.0.0.1:8000/miniproject/login/">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+      </div>
+
+        <!-- 사이드바 버튼 -->
+        <input type="checkbox" id="check">
+        <label for="check">
+          {% comment %} <i class="fas fa-bars" id="btn"></i> {% endcomment %}
+          <i class="fas fa-times" id="cancel"></i>
+        </label>
+
+        <!-- 사이드바 -->
+        <div id="mySidebar" class="sidebar">
+          <header>My App</header>
+          <ul>
+            <li><a href="#" id="1">1</a></li>
+            <li><a href="#" id="2">2</a></li>
+            <li><a href="#" id="3">3</a></li>
+            <li><a href="#" id="4">4</a></li>
+            <li><a href="#" id="5">5</a></li>
+          </ul>
+        </div>
     </div>
 
     <script
       type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c&libraries=services,clusterer,drawing"
-    ></script>
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c&libraries=services,clusterer,drawing">
+    </script>
 
     <script>
             var latitude = 35.160085289410176; // 사용자 현재 위도
             var longitude = 126.85144573494203; // 사용자 현재 경도
 
             // 중심좌표로 지도 이동
-      var container = document.getElementById('map');
-      var options = {
-       center: new kakao.maps.LatLng(latitude, longitude),
-       level: 3
-      };
-      var map = new kakao.maps.Map(container, options);
+            var container = document.getElementById('map');
+            var options = {
+                center: new kakao.maps.LatLng(latitude, longitude),
+                level: 3
+            };
+            var map = new kakao.maps.Map(container, options);
 
             // 지도에 1km 점선 원 표시
             let circle = new kakao.maps.Circle({
@@ -164,8 +123,6 @@
             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
             dmarker(latitude, longitude);
 
-
-            // 주소로 좌표 검색해서 지도 중심 이동
             var geocoder = new kakao.maps.services.Geocoder();
             var callback = function(result, status){
                 if(status == kakao.maps.services.Status.OK){
@@ -180,11 +137,11 @@
             document.getElementById("searchBtn").addEventListener("click", () => {
                 geocoder.addressSearch(document.getElementById("address").value, callback);
             });
-
+            
             // 마커 생성 함수
             function dmarker(latitude, longitude) {
                 {% for i in data %}
-                    if (calculate_distance({{i.lat}}, {{i.lng}}, latitude, longitude) <= 10) {
+                    if (calculate_distance({{i.lat}}, {{i.lng}}, latitude, longitude) <= 1) {
                         // 마커를 생성합니다
                         var marker = new kakao.maps.Marker({
                             map: map, // 마커를 표시할 지도
@@ -241,14 +198,17 @@
 
             // 좌측 사이드바 열기
             function openNav() {
-                document.getElementById("mySidebar").style.width = "250px";
-                //document.getElementById("main").style.marginLeft = "250px";
+                document.getElementById("mySidebar").style.left = "0";
+                {% comment %} document.getElementById("1")
+                document.getElementById("2")
+                document.getElementById("3")
+                document.getElementById("4")
+                document.getElementById("5") {% endcomment %}
             }
 
             // 좌측 사이드바 닫기
             function closeNav() {
-                document.getElementById("mySidebar").style.width = "0";
-                //document.getElementById("main").style.marginLeft= "0";
+                document.getElementById("mySidebar").style.left = "-250px";
             }
 
             // 두 좌표간 거리 계산

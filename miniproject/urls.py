@@ -18,6 +18,10 @@ urlpatterns = [
          name='logout'
          ),
     path('index/', views.index, name='index'),
+<<<<<<< HEAD
 
 
+=======
+    path('test/', views.test, name='test'),
+>>>>>>> 11423cffaf13ad01bc3a5e064a9e340e5f34c8b1
 ]
