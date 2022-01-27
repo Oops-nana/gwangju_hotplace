@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com');
 
 body{
-
   font-family: 'Roboto',sans-serif;
   margin: 0;
   padding: 0;
@@ -49,7 +48,19 @@ body{
   display: block;
   height: 100%;
   width: 100%;
-  line-height: 65px;
+  line-height: 165px;
+  font-size: 20px;
+  color: white;
+  padding-left: 40px;
+  box-sizing: border-box;
+  border-top: 1px solid white;
+
+  transition: .4s;
+}
+.sidebar ul div{
+  height: 100%;
+  width: 100%;
+  line-height: 165px;
   font-size: 20px;
   color: white;
   padding-left: 40px;
@@ -64,51 +75,21 @@ ul li:hover a{
 .sidebar ul a i{
   margin-right: 16px;
 }
-#check{
-  display: none;
-}
-label #btn,label #cancel{
+.cancel{
   position: absolute;
-  cursor: pointer;
-  background: #f0b71c;
-  border-radius: 3px;
+  top: 15px;
+  left: 440px;
 }
-/* label #btn{
-  left: 50px;
-  top:25px;
-  font-size: 25px;
-  color: white;
-  padding: 6px 12px;
-  transition: all .5s;
-} */
-label #cancel{
-  z-index: 4;
-  left: -195px;
-  top: 17px;
-  font-size: 30px;
-  color: #fcfcfc;
-  padding: 4px 9px;
-  transition: all .5s;
-}
-#check:checked ~ .sidebar{
-  left: 0px;
-}
-#check:checked ~ label #btn{
-  left: 250px;
-  opacity: 0;
-  pointer-events: none;
-}
-#check:checked ~ label #cancel{
-  left: 195px;
-}
-#check:checked ~ section{
-  margin-left: 250px;
-} 
-section{
-  background: url() no-repeat;
-  /* background-postion: center; */
-  background-size: cover;
-  height: 100vh;
+.cancel_btn{
+  color: #f0b71c;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #2f3640;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
 }
 /* 검색창 */
 .search-box{
@@ -141,7 +122,6 @@ background: white;
   align-items: center;
   transition: 0.4s;
 }
-
 .search-txt{
   border:none;
   background: none;

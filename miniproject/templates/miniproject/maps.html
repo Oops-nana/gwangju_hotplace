@@ -51,31 +51,30 @@
         </button>
       </div>
 
-        <!-- 로그아웃 버튼 -->
+      <!-- 로그아웃 버튼 -->
       <div class="logout" type="button" name="">
         <a class="logout-btn" href="http://127.0.0.1:8000/miniproject/login/">
             <i class="fas fa-sign-out-alt"></i>
         </a>
       </div>
-
-        <!-- 사이드바 버튼 -->
-        <input type="checkbox" id="check">
-        <label for="check">
-          {% comment %} <i class="fas fa-bars" id="btn"></i> {% endcomment %}
-          <i class="fas fa-times" id="cancel"></i>
-        </label>
-
-        <!-- 사이드바 -->
-        <div id="mySidebar" class="sidebar">
-          <header>My App</header>
-          <ul>
-            <li><a href="#" id="1">1</a></li>
-            <li><a href="#" id="2">2</a></li>
-            <li><a href="#" id="3">3</a></li>
-            <li><a href="#" id="4">4</a></li>
-            <li><a href="#" id="5">5</a></li>
-          </ul>
-        </div>
+        
+      <!-- 사이드바 -->
+      <div id="mySidebar" class="sidebar">
+        <header>My App
+          <div class="cancel" type="button" id="check">
+            <button class="cancel_btn">
+              <i class="fas fa-times" id="cancel"></i>
+            </button>
+          </div>
+        </header>
+        <ul>
+          <li><img src="https://inmun360.culture.go.kr/upload/board/image/30/2365730_201908140058465150.jpg" alt="이미지 설명" width="500"></li>
+          <li><div id="info">장소 정보, 전화번호, 주소</div></li>
+          <li><div id="runtime">운영 시간</div></li>
+          <li><div id="rate">평균 평점</div></li>
+          <li><div id="comment">댓글</div></li>
+        </ul>
+      </div>
     </div>
 
     <script
@@ -163,6 +162,9 @@
 
                         // 마커 클릭 이벤트 등록(클릭 시 팝업창 뜨도록 함수 수정)
                         kakao.maps.event.addListener(marker, 'click', () => {openNav();});
+                        document.getElementById("check").addEventListener("click", () => {
+                          closeNav();
+                      });
                     }
                 {% endfor %}
             }
@@ -199,16 +201,11 @@
             // 좌측 사이드바 열기
             function openNav() {
                 document.getElementById("mySidebar").style.left = "0";
-                {% comment %} document.getElementById("1")
-                document.getElementById("2")
-                document.getElementById("3")
-                document.getElementById("4")
-                document.getElementById("5") {% endcomment %}
             }
 
             // 좌측 사이드바 닫기
             function closeNav() {
-                document.getElementById("mySidebar").style.left = "-250px";
+                document.getElementById("mySidebar").style.left = "-500px";
             }
 
             // 두 좌표간 거리 계산
