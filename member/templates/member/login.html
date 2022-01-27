@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>로그인</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+    />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  </head>
+  <body>
+    
+    <!-- partial:index.partial.html -->
+    <p class="tip">로그인을 해주세요.</p>
+    
+    <div class="cont">
+      <form method="post">
+        {% csrf_token %}
+      <div class="form sign-in">
+        <h2>어서오세요!</h2>
+        <label>
+          <span>이메일</span>
+          <input type="text" name="user_id"/>
+        </label>
+        <label>
+          <span>비밀번호</span>
+          <input type="password" name="password"/>
+        </label>
+        <button type="submit" class="submit">로그인</button>        
+        <button type="button" class="submit" onclick="location.href='/member/signup'">회원가입</button>
+      </div>
+    </form>
+      <div class="sub-cont">
+        <div class="img">
+          </div>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
