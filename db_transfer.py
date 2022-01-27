@@ -49,6 +49,6 @@ print(datas)
 tour_dataFrame = pd.DataFrame(datas)
 print(tour_dataFrame)
 
-engine = db.create_engine('mysql+pymysql://root:bestforall1@localhost:3306/hotplace2')
+engine = db.create_engine('mysql+pymysql://root:bestforall1@localhost:3306/abc')
 
 tour_dataFrame.to_sql("museum_detail", engine, index=False, if_exists="append")

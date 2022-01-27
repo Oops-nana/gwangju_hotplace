@@ -39,7 +39,7 @@ def login(request):
             request.session['user_id'] = m.user_id
             request.session['user_name'] = m.user_name
         
-        return render(request, 'miniproject/maps.html')
+        return redirect('/miniproject/maps')
     else:
         return render(request, 'member/login.html')
 
