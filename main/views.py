@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from django.forms import model_to_dict
+=======
+
+>>>>>>> 678d2f6b1c809fb6705061811b24a44be6cba031
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
