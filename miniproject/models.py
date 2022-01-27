@@ -3,9 +3,9 @@ from django.db import models
 # Create your models here.
 
 class User(models.Model):
-    username = models.CharField(verbose_name = '이름', max_length=300)
-    id = models.CharField(verbose_name = '아이디', max_length=300, primary_key=True)
-    password = models.CharField(verbose_name = '비밀번호', max_length=300)
+    username = models.CharField(verbose_name = '이름', max_length=255)
+    id = models.CharField(verbose_name = '아이디', max_length=255, primary_key=True)
+    password = models.CharField(verbose_name = '비밀번호', max_length=255)
     email = models.EmailField(verbose_name = '이메일', max_length = 128, unique = True, default ='')
     GENDER = (
         ('M', '남성(Man)'),

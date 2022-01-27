@@ -15,6 +15,14 @@ def maps(request):
         data.append(i)
     return render(request, 'miniproject/maps.html', {'data': data})
 
+def test(request):
+    place = CommonPlace.objects.all()
+    data = []
+    for i in place:
+        i = model_to_dict(i)
+        data.append(i)
+    return render(request, 'miniproject/test.html', {'data': data})
+
 
 def index(request):
     return render(request, 'miniproject/index.html')
