@@ -2,18 +2,33 @@ from ssl import AlertDescription
 from django.shortcuts import render,redirect
 from .models import Member
 from django.http import HttpResponse
+from .forms import UploadFileForm
 
 def signup(request):
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
         password = request.POST.get('password')
         user_name = request.POST.get('user_name')
-        m = Member(
-            user_id=user_id, password=password, user_name=user_name)
+
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            uploadFile = form.save()
+            # uploadFile = form.save(commit=False)
+            name = uploadFile.file.name
+        else:
+            form = UploadFileForm()
+            name = ''
+   
+        m = Member(user_id=user_id, password=password, user_name=user_name, file_name=name)
         m.save()
-        return redirect('/member/login')
+
+        return redirect('/member/signupcheck')
     else:
         return render(request, 'member/signup.html')
+
+def signupcheck(request):
+    return render(request, 'member/signupcheck.html')
+
 
 def login(request):
     if request.method == 'POST':

@@ -50,6 +50,6 @@ print(datas)
 tour_dataFrame = pd.DataFrame(datas)
 print(tour_dataFrame)
 
-engine = db.create_engine('mysql+pymysql://root:aivle@127.0.0.1:3306/aaa')
+engine = db.create_engine('mysql+pymysql://root:aivle@127.0.0.1:3306/abc')
 
 tour_dataFrame.to_sql("museum_detail", engine, index=False, if_exists="append")
