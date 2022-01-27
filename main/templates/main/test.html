@@ -16,23 +16,7 @@
     return cookieValue;
   }
 </script>
-{% comment %}
-<script>
-  const csrftoken = getCookie('csrftoken');
-  const place_name = '평화광장'
-  const data = axios({
-      url: "/main/request/",
-      method: 'post',
-      data: {'place_name' : place_name},
-      header: {
-          'Content-Type' : 'application/json',
-          'X-CSRFToken' : csrftoken
-      });
-      data.then(function (result) {
-      console.log(result.data);
-      });
-</script>
-{% endcomment %} ()
+
 <script>
   const csrftoken = getCookie("csrftoken");
   const place_name = "광주김치박물관";
