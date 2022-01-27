@@ -1,5 +1,5 @@
 from ssl import AlertDescription
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Member
 from django.http import HttpResponse
 
@@ -11,9 +11,9 @@ def signup(request):
         m = Member(
             user_id=user_id, password=password, user_name=user_name)
         m.save()
-        return render(request, 'member/login.html')
+        return redirect('/member/login')
     else:
-        return render(request, 'member/login.html')
+        return render(request, 'member/signup.html')
 
 def login(request):
     if request.method == 'POST':

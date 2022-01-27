@@ -1,10 +1,8 @@
-from marshal import loads
-from black import jupyter_dependencies_are_installed
+
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 import json
-import pymysql.cursors
 from django.shortcuts import render
 
 from django.template import exceptions

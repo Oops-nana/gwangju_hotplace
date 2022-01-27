@@ -31,11 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    << << << < HEAD
-    'bootstrap4',
-    == == == =
     'member',
-    >>>>>> > 77b8262afd0682381a9659317d13121bbf77a4e0
     'miniproject',
     'main',
     'django.contrib.admin',
@@ -90,9 +86,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hotplace2',
+        'NAME': 'aaa',
         'USER': 'root',
-        'PASSWORD': 'bestforall1',
+        'PASSWORD': 'aivle',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
