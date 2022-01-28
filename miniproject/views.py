@@ -10,7 +10,7 @@ def maps(request):
     return render(request, 'miniproject/maps.html')
 
 def login_session(request):
-    user_pk = request.session.get('user_id')
+    user_pk = request.session.get('id')
 
     if user_pk:
         fuser = Member.objects.get(pk=user_pk)
@@ -19,7 +19,7 @@ def login_session(request):
     # return render(request, 'member/login.html')
 
 def logout(request):
-    del request.session['user_id'] # 개별 삭제
+    del request.session['id'] # 개별 삭제
     del request.session['user_name'] # 개별 삭제
     request.session.flush() # 전체 삭제
 
