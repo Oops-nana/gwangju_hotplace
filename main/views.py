@@ -146,3 +146,57 @@ def showDetails(request):
 
 def showDetailsTest(request):
     return render(request, 'main/test.html')
+
+# @csrf_exempt
+# def showDetails(request):
+#     place = CommonPlace
+#     if request.method == 'POST':
+#         try:
+#             place_name = request.POST.get('place_name')
+#             # place_name에 박물관, 갤러리가 포함된 값이면
+#             if isMuseumOrGallary(place_name):
+#                 joined = joinMuseum(place_name)
+#                 # 여기에 3000번 이상의 쿼리를 추가 조인해 넣어준다.
+#                 # return JsonResponse(joined, safe=False)
+#             obj = place.objects.filter(place_name=place_name)
+#             returnJson = []
+#             for o in obj:
+#                 temp_o = model_to_dict(o)
+#                 returnJson.append(temp_o)
+#         except ObjectDoesNotExist:
+#             error = "해당 장소에 대한 결과가 없습니다."
+#             error.encode()
+#             errorJson = json.loads(json.dumps(error))
+#             print(errorJson)
+#             return JsonResponse(errorJson, safe=False)
+
+#         return (request, 'miniproject/maps.html', {'data' : returnJson})
+#     return HttpResponse("오류")
+
+@csrf_exempt
+def showDetails(request):
+    place = CommonPlace
+    if request.method == 'POST':
+        try:
+            place_name = request.POST.get('place_name')
+            # place_name에 박물관, 갤러리가 포함된 값이면
+            if isMuseumOrGallary(place_name):
+                joined = joinMuseum(place_name)
+                # 여기에 3000번 이상의 쿼리를 추가 조인해 넣어준다.
+                # return JsonResponse(joined, safe=False)
+                return render(request, 'miniproject/maps.html', {'data' : joined})
+
+            obj = place.objects.filter(place_name=place_name)
+            returnJson = []
+            for o in obj:
+                temp_o = model_to_dict(o)
+                returnJson.append(temp_o)
+        except ObjectDoesNotExist:
+            error = "해당 장소에 대한 결과가 없습니다."
+            error.encode()
+            errorJson = json.loads(json.dumps(error))
+            print(errorJson)
+            return JsonResponse(errorJson, safe=False)
+
+        return JsonResponse(returnJson, safe=False)
+    return HttpResponse("오류")

@@ -22,4 +22,5 @@ urlpatterns = [
     path('findnear/', views.requestLocation, name='findnear'),
     path('request/', views.showDetails, name='show_detail'),
     path('request/test', views.showDetailsTest, name='show_detail_test'),
+    path('maps/', views.showDetails, name='showDetails'),
 ]

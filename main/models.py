@@ -10,6 +10,7 @@ class CommonPlace(models.Model):
     lng = models.TextField(null=True)
     road_address = models.TextField(null=True)
     info = models.BigIntegerField(null=True)
+    img = models.TextField()
 
     class Meta:
         db_table = 'place_common'
@@ -31,6 +32,7 @@ class museumDetail(models.Model):
     holiday_begin = models.TextField(null=True)
     holiday_end = models.TextField(null=True)
     close_info = models.TextField(null=True)
+    img = models.TextField()
 
     class Meta:
         db_table = 'museum_detail'

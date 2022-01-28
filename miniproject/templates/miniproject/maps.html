@@ -27,17 +27,6 @@
         width: 1700px;
         height: 850px;
       }
-      .search {
-        position: absolute;
-        top: 50px;
-        left: 500px;
-        width: 500px;
-        height: 50px;
-        z-index: 2;
-      }
-      body {
-        font-family: "Lato", sans-serif;
-      }
     </style>
   </head>
   {% csrf_token %}
@@ -49,6 +38,7 @@
 
     <!-- 검색창 -->
     <div class="header">
+      <img src="https://ktaivle-ai.moducoding.com/images/subdomains/ktaivle-ai_logo.png" width=100px id="logo1">
       <div class="search-box">
         <input
           class="search-txt"
@@ -62,12 +52,23 @@
       </div>
 
       <!-- 로그아웃 버튼 -->
-      <div class="logout" type="button" name="">
-        <a class="logout-btn" href="http://127.0.0.1:8000/miniproject/login/">
-          <i class="fas fa-sign-out-alt"></i>
-        </a>
+      <div class="picture" id="picture">
+        <img src="https://ktaivle-ai.moducoding.com/images/photoDefualt.png" height=70px>
       </div>
-        
+
+      <form action="{% url 'miniproject:logout' %}">
+        <div class="logout" type="button" name="">
+          <button type="submit" class="logout-btn">
+            <i class="fas fa-sign-out-alt">
+              {% if request.session.user_id %}
+              {{ request.session.user_name }} 님
+              {% else %}
+                <p>  Guest</p>
+              {% endif %}
+            </i>
+          </button>
+        </div>
+      </form>
       <!-- 사이드바 -->
       <div id="mySidebar" class="sidebar">
         <header class="header" id="placename">
@@ -78,7 +79,7 @@
           </div>
         </header>
         <ul>
-          <li><img src="https://inmun360.culture.go.kr/upload/board/image/30/2365730_201908140058465150.jpg" alt="이미지 설명" width="500"></li>
+          <li><img src="" alt="이미지 설명" width="500" id="img"></li>
           <li><div id="info"></div></li>
           <li><div id="runtime"></div></li>
           <li><div id="rate"></div></li>
@@ -163,6 +164,7 @@
                             title : "{{i.place_name}}", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
                             image : markerImage // 마커 이미지
                         });
+                        console.log("{{i.holiday_begin}}")
 
                         // 인포윈도우 생성
                         var infowindow = new kakao.maps.InfoWindow({
@@ -177,7 +179,7 @@
 
                         // 마커 클릭 이벤트 등록(클릭 시 팝업창 뜨도록 함수 수정)
                         kakao.maps.event.addListener(marker, 'click', () => {
-                          openNav('{{i.place_name}}', "{{i.info}}", "{{i.road_address}}", "{{i.phone}}", '런타임', '별점', '평가');});
+                          openNav('{{i.place_name}}', "{{i.img}}", "{{i.info}}", "{{i.road_address}}", "{{i.phone}}", "{{i.week_begin}}", "{{i.week_end}}", "{{i.holiday_begin}}", "{{i.holiday_end}}", "{{i.close_info}}", '별점', '평가');});
                         document.getElementById("check").addEventListener("click", () => {
                           closeNav();
                         });
@@ -215,7 +217,7 @@
             }
 
             // 좌측 사이드바 열기
-            function openNav(place_name, info, road_address, phone, runtime, rate, comment) {
+            function openNav(place_name, img, info, road_address, phone, week_begin, week_end, holiday_begin, holiday_end, close_info, rate, comment) {
                 document.getElementById("mySidebar").style.left = "0";
                 const csrftoken = getCookie("csrftoken");
                 const placename = place_name;
@@ -233,16 +235,17 @@
                     datas = result.data;
                     console.log(datas);
                 });
+                document.getElementById("img").src = img;
                 document.getElementById("placename").innerHTML = place_name;
                 document.getElementById("info").innerHTML = "소개 : <br>" + info;
-                document.getElementById("runtime").innerHTML = road_address, phone, runtime;
+                document.getElementById("runtime").innerHTML = road_address, phone, week_begin, week_end, holiday_begin, holiday_end, close_info;
                 document.getElementById("rate").innerHTML = rate;
                 {% comment %} document.getElementById("comment").innerHTML = comment; {% endcomment %}
             }
 
             // 좌측 사이드바 닫기
             function closeNav() {
-                document.getElementById("mySidebar").style.left = "-600px";
+                document.getElementById("mySidebar").style.left = "-510px";
             }
 
             // 두 좌표간 거리 계산

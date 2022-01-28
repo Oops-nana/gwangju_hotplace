@@ -4,7 +4,7 @@ body{
   font-family: 'Roboto',sans-serif;
   margin: 0;
   padding: 0;
-  background: rgb(237, 237, 237);
+  background: rgb(255, 255, 255);
 }
 *{
   margin: 0;
@@ -17,27 +17,44 @@ body{
   width: 100%;
   border-bottom: 3px solid #2f3640;
 }
+.header #logo1{
+  margin-left: 550px;
+}
 /* 사이드바 */
 .sidebar{
+  position: absolute;
+  z-index:5;
+  border-color: #2f3640;
+  border-style: solid;
+  border-width: 2px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  top: 0;
+  left: -510px;
+  width: 500px;
+  height: 100%;
+  background: rgb(237, 237, 237);
+  transition: all .5s ease;
+}
+#mySidebar{
   position: fixed;
-  /* border-color: #2f3640; */
-  /* border-style: solid; */
-  /* border-width: 2px; */
-  /* border-radius: 80px; */
-  /* border-top-right-radius: 80px;
-  border-bottom-right-radius: 80px; */
-  left: -500px;
+  z-index:5;
+  border-color: #2f3640;
+  border-style: solid;
+  border-width: 2px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  left: -510px;
   width: 500px;
   height: 100%;
   background: rgb(237, 237, 237);
   transition: all .5s ease;
 }
 .sidebar header{
-  /* border-top-right-radius: 80px; */
-  /* border-top-left-radius:  80px; */
+  border-top-right-radius: 50px;
   font-size: 50px;
-  /* font-family: 'Dongle', sans-serif; */
-  /* font-weight: bold; */
+  font-family: 'Dongle', sans-serif;
+  font-weight: bold;
   color: white;
   text-align: center;
   line-height: 70px;
@@ -45,17 +62,17 @@ body{
   user-select: none;
 }
 .sidebar ul div{
-  /* font-family: 'Dongle', sans-serif; */
+  font-family: 'Dongle', sans-serif;
   height: 100%;
   width: 100%;
   line-height: 65px;
-  /* max-height: 155px; */
-  /* overflow: auto; */
+  max-height: 155px;
+  overflow: auto;
   font-size: 30px;
   color: black;
   padding-left: 20px;
   box-sizing: border-box;
-  border-top: 5px solid #2f3640;
+  border-top: 1px solid #2f3640;
   transition: .4s;
 }
 
@@ -65,18 +82,16 @@ ul li:hover a{
 
 .cancel{
   position: absolute;
-  z-index: 9;
   top: 15px;
   left: 440px;
 }
 .cancel_btn{
+  position: absolute;
   color: #f0b71c;
-  z-index: 10;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background: white;
-  display: flex;
   justify-content: center;
   align-items: center;
   transition: 0.4s;
@@ -85,7 +100,7 @@ ul li:hover a{
 .search-box{
   position: absolute;
   top: 48px;
-  left: 75%;
+  left: 70%;
   transform: translate(-50%,-50%);
   background: #2f3640;
   height: 40px;
@@ -128,23 +143,28 @@ background: white;
 .logout{
   position: absolute;
   top: 38px;
-  left: 90%;
+  left: 93%;
   transform: translate(-50%,-50%);
   height: 40px;
   border-radius: 40px;
-  padding: 10px;
 }
 .logout-btn{
   color: #f0b71c;
   float: right;
-  width: 60px;
+  width: 200px;
   height: 60px;
-  border-radius: 50%;
+  border-radius: 15px;
   background: #2f3640;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: 0.4s;
+}
+.picture{
+  position:absolute;
+  top:10px;
+  left:82%;
+  border-radius: 50%;
 }
 
 .line{
