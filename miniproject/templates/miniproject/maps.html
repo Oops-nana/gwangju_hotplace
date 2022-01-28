@@ -1,0 +1,270 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+    <script
+      src="https://kit.fontawesome.com/b0ef0a4fe9.js"
+      crossorigin="anonymous"
+    ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c&libraries=services,clusterer,drawing"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>뚜벅이들을 위한 광주 Hot Place 추천!!</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap">
+
+    <style>
+      .maps {
+        position: fixed;
+        left: 100px;
+        top: 93px;
+        width: 1700px;
+        height: 850px;
+      }
+    </style>
+  </head>
+  {% csrf_token %}
+  <body>
+    {% comment %} 지도 생성 {% endcomment %}
+    <div class="maps">
+      <div id="map" style="width: 100%; height: 100%; position: relative"></div>
+    </div>
+
+    <!-- 검색창 -->
+    <div class="header">
+      <img src="https://ktaivle-ai.moducoding.com/images/subdomains/ktaivle-ai_logo.png" width=100px id="logo1">
+      <div class="search-box">
+        <input
+          class="search-txt"
+          type="text"
+          id="address"
+          placeholder="주소를 입력하세요"
+        />
+        <button class="search-btn" id="searchBtn">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+
+      <!-- 로그아웃 버튼 -->
+      <div class="picture" id="picture">
+        <img src="https://ktaivle-ai.moducoding.com/images/photoDefualt.png" height=70px>
+      </div>
+
+      <form action="{% url 'miniproject:logout' %}">
+        <div class="logout" type="button" name="">
+          <button type="submit" class="logout-btn">
+            <i class="fas fa-sign-out-alt">
+              {% if request.session.id %}
+              {{ request.session.user_name }} 님
+              {% else %}
+                <p>  Guest</p>
+              {% endif %}
+            </i>
+          </button>
+        </div>
+      </form>
+      <!-- 사이드바 -->
+      <div id="mySidebar" class="sidebar">
+        <header class="header" id="placename">
+          <div class="cancel" type="button" id="check">
+            <button class="cancel_btn">
+              <i class="fas fa-times" id="cancel"></i>
+            </button>
+          </div>
+        </header>
+        <ul>
+          <li><img src="" alt="이미지 설명" width="500" id="img"></li>
+          <li><div id="info"></div></li>
+          <li><div id="runtime"></div></li>
+          <li><div id="rate"></div></li>
+          <li><div id="comment">
+              {% csrf_token %}
+              {% include 'miniproject/comment.html'%}</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <script 
+      type="text/javascript" 
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9cd9bd1861d531568b843766823f043c&libraries=services,clusterer,drawing">
+    </script>
+
+    <script>
+            var latitude = 35.160085289410176; // 사용자 현재 위도
+            var longitude = 126.85144573494203; // 사용자 현재 경도
+            console.log("{{ request.session.file_name }}")
+
+            // 중심좌표로 지도 이동
+            var container = document.getElementById('map');
+            var options = {
+                center: new kakao.maps.LatLng(latitude, longitude),
+                level: 3
+            };
+            var map = new kakao.maps.Map(container, options);
+
+            // 지도에 1km 점선 원 표시
+            let circle = new kakao.maps.Circle({
+                map : map,
+                center : new kakao.maps.LatLng(latitude, longitude), // 중심 좌표
+                radius : 1000, // 반경
+                strokeWeight : 2, // 선 두께
+                strokeColor : '#0000FF', // 색 코드
+                strokeOpacity : 0.3, // 불투명도
+                strokeStyle : 'dash' // 선 종류
+            });
+            dcircle(latitude, longitude);
+
+            // 일반-스카이뷰 타입 컨트롤러
+            var mapTypeControl = new kakao.maps.MapTypeControl();
+            map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+            // 줌 컨트롤러
+            var zoomControl = new kakao.maps.ZoomControl();
+            map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+            // 마커 이미지
+            var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+            // 마커 이미지의 이미지 크기 입니다
+            var imageSize = new kakao.maps.Size(24, 35);
+            // 마커 이미지를 생성합니다
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+            dmarker(latitude, longitude);
+
+            var geocoder = new kakao.maps.services.Geocoder();
+            var callback = function(result, status){
+                if(status == kakao.maps.services.Status.OK){
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    let latitude = coords.getLat();
+                    let longitude = coords.getLng();
+                    map.panTo(coords);
+                    dcircle(latitude, longitude);
+                    dmarker(latitude, longitude);
+                }
+            };
+            document.getElementById("searchBtn").addEventListener("click", () => {
+                geocoder.addressSearch(document.getElementById("address").value, callback);
+            });
+            
+            // 마커 생성 함수
+            function dmarker(latitude, longitude) {
+                {% for i in data %}
+                    if (calculate_distance({{i.lat}}, {{i.lng}}, latitude, longitude) <= 1) {
+                        // 마커를 생성합니다
+                        var marker = new kakao.maps.Marker({
+                            map: map, // 마커를 표시할 지도
+                            position: new kakao.maps.LatLng({{i.lat}}, {{i.lng}}), // 마커를 표시할 위치
+                            title : "{{i.place_name}}", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                            image : markerImage // 마커 이미지
+                        });
+
+                        // 인포윈도우 생성
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: "{{i.place_name}}" // 인포윈도우에 표시할 내용
+                        });
+
+                        // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+                        // 이벤트 리스너로는 클로저를 만들어 등록합니다
+                        // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+                        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+                        // 마커 클릭 이벤트 등록(클릭 시 팝업창 뜨도록 함수 수정)
+                        kakao.maps.event.addListener(marker, 'click', () => {
+                          openNav('{{i.place_name}}', "{{i.img}}", "{{i.info}}", "{{i.road_address}}", "{{i.phone}}", "{{i.week_begin}}", "{{i.week_end}}", "{{i.holiday_begin}}", "{{i.holiday_end}}", "{{i.close_info}}", '별점', '평가');});
+                        document.getElementById("check").addEventListener("click", () => {
+                          closeNav();
+                        });
+                    }
+                {% endfor %}
+            }
+
+            // 원 그리는 함수
+            function dcircle(lat, lgt) {
+                circle.setMap(null);
+                circle = new kakao.maps.Circle({
+                    map : map,
+                    center : new kakao.maps.LatLng(lat, lgt), // 중심 좌표
+                    radius : 1000, // 반경
+                    strokeWeight : 2, // 선 두께
+                    strokeColor : '#0000FF', // 색 코드
+                    strokeOpacity : 0.3, // 불투명도
+                    strokeStyle : 'dash' // 선 종류
+                });
+                circle.setMap(map);
+            }
+
+            // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+            function makeOverListener(map, marker, infowindow) {
+                return function() {
+                    infowindow.open(map, marker);
+                };
+            }
+
+            // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+            function makeOutListener(infowindow) {
+                return function() {
+                    infowindow.close();
+                };
+            }
+
+            // 좌측 사이드바 열기
+            function openNav(place_name, img, info, road_address, phone, week_begin, week_end, holiday_begin, holiday_end, close_info, rate, comment) {
+                document.getElementById("mySidebar").style.left = "0";
+                const csrftoken = getCookie("csrftoken");
+                const placename = place_name;
+                const formData = new FormData();
+                formData.append("place_name", place_name);
+                const ajax = axios({
+                    url: "/main/request/",
+                    method: "post",
+                    data: formData,
+                    headers: {
+                        "X-CSRFToken": csrftoken,
+                    },
+                });
+                ajax.then(function (result) {
+                    datas = result.data;
+                    console.log(datas);
+                });
+                document.getElementById("img").src = img;
+                document.getElementById("placename").innerHTML = place_name;
+                document.getElementById("info").innerHTML = "소개 : <br>" + info;
+                document.getElementById("runtime").innerHTML = road_address, phone, week_begin, week_end, holiday_begin, holiday_end, close_info;
+                document.getElementById("rate").innerHTML = rate;
+                {% comment %} document.getElementById("comment").innerHTML = comment; {% endcomment %}
+            }
+
+            // 좌측 사이드바 닫기
+            function closeNav() {
+                document.getElementById("mySidebar").style.left = "-510px";
+            }
+
+            // 두 좌표간 거리 계산
+            function calculate_distance(lat, lng, latitude, longitude) {
+                var dist = 6371 * Math.acos(Math.cos(latitude * Math.PI / 180) * Math.cos(lat * Math.PI / 180) * Math.cos(lng * Math.PI / 180 - longitude * Math.PI / 180) + Math.sin(latitude * Math.PI / 180) * Math.sin(lat * Math.PI / 180));
+                return dist;
+            }
+            function getCookie(name) {
+              var cookieValue = null;
+              if (document.cookie && document.cookie !== "") {
+                var cookies = document.cookie.split(";");
+          
+                for (var i = 0; i < cookies.length; i++) {
+                  var cookie = cookies[i].trim();
+                  if (cookie.substring(0, name.length + 1) === name + "=") {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                  }
+                }
+              }
+              return cookieValue;
+            }
+    </script>
+  </body>
+</html>

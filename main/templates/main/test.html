@@ -1,0 +1,36 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      var cookies = document.cookie.split(";");
+
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+</script>
+<script>
+  const csrftoken = getCookie("csrftoken");
+  const place_name = "국립아시아문화전당";
+  const formData = new FormData();
+  formData.append("place_name", place_name);
+  const ajax = axios({
+    url: "/main/request/",
+    method: "post",
+    data: formData,
+    headers: {
+      "X-CSRFToken": csrftoken,
+    },
+  });
+  ajax.then(function (result) {
+    datas = result.data;
+    console.log(datas);
+  });
+</script>

@@ -1,0 +1,31 @@
+<form method="post" class="post-form my-3">
+  {% csrf_token %}
+  <!-- 오류표시 Start -->
+  {% if form.errors %}
+  <div class="alert alert-danger" role="alert">
+    {% for field in form %} {% if field.errors %}
+    <strong>{{ field.label }}</strong>
+    {{ field.errors }} {% endif %} {% endfor %}
+  </div>
+  {% endif %}
+  <div class="form-group">
+    <label for="content">Comment</label>
+    <input
+      id="comment_text"
+      name="content"
+      type="text"
+      class="form-control"
+      placeholder="댓글을 입력해주세요"
+      value="{{ form.content.value|default_if_none:'' }}"
+    />
+    별점
+    <select name="star" id="stars">
+      <option value="1" name="1">1</option>
+      <option value="2" name="2">2</option>
+      <option value="5" name="3">3</option>
+      <option value="3" name="4">4</option>
+      <option value="4" name="5">5</option>
+    </select>
+    <button type="submit" class="btn btn-primary">저장하기</button>
+  </div>
+</form>
