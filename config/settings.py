@@ -86,12 +86,34 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hotplace',
+        'NAME': 'hotplace2',
         'USER': 'root',
-        'PASSWORD': 'aivle',
+        'PASSWORD': 'bestforall1',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers':
+    {
+        'console':
+        {
+            'level': 'DEBUG',
+            'class':
+            'logging.StreamHandler',
+        }
+    },
+    'loggers':
+    {'django.db.backends':
+        {
+            'handlers':
+            ['console'],
+            'level': 'DEBUG',
+        },
+     }
 }
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

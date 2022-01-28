@@ -13,6 +13,7 @@ class CommonPlace(models.Model):
     lng = models.TextField(null=True)
     road_address = models.TextField(null=True)
     info = models.BigIntegerField(null=True)
+    img = models.TextField(null=True)
 
     class Meta:
         db_table = 'place_common'
@@ -34,6 +35,7 @@ class museumDetail(models.Model):
     holiday_begin = models.TextField(null=True)
     holiday_end = models.TextField(null=True)
     close_info = models.TextField(null=True)
+    img = models.TextField(null=True)
 
     class Meta:
         db_table = 'museum_detail'
@@ -41,11 +43,11 @@ class museumDetail(models.Model):
 
 
 class Comment(models.Model):
-    comment_id = models.IntegerField(primary_key=True, null=False)
+    comment_id = models.AutoField(primary_key=True)
     content = models.CharField(max_length=100, null=True)
-    date = models.DateField(auto_now=False, auto_now_add=False)
-    user_id = models.ForeignKey(
-        Member, on_delete=models.CASCADE)
+    date = models.DateField(auto_now=False, auto_now_add=False, default=null)
+    id = models.ForeignKey(
+        Member, on_delete=models.CASCADE, db_column=id)
     place_id = models.ForeignKey(
         CommonPlace, null=True, on_delete=models.SET_NULL)
     rate = models.IntegerField(null=True)

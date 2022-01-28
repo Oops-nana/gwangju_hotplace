@@ -19,4 +19,7 @@ urlpatterns = [
          ),
     path('index/', views.index, name='index'),
     path('test/', views.test, name='test'),
+    path('comment/', views.postCommentAndStar, name='comment'),
+    path('session/', views.login_session, name='session'),
+    path('comment/', views.comment_create, name='comment_create'),
 ]

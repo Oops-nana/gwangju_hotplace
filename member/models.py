@@ -2,10 +2,12 @@ from django.db import models
 
 
 class Member(models.Model):
-    user_id = models.CharField(max_length=50, unique=True, db_column='user_id')
+    id = models.CharField(max_length=50, unique=True,
+                          db_column='id', primary_key=True)
     password = models.CharField(max_length=50)
     user_name = models.CharField(max_length=50)
     agree = models.BooleanField()
+    file_name = models.CharField(max_length=50)
 
     class Meta:
         db_table = 'user'
