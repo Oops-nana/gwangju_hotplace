@@ -101,6 +101,7 @@
     <script>
             var latitude = 35.160085289410176; // 사용자 현재 위도
             var longitude = 126.85144573494203; // 사용자 현재 경도
+            console.log("{{ request.session.file_name }}")
 
             // 중심좌표로 지도 이동
             var container = document.getElementById('map');
@@ -164,7 +165,6 @@
                             title : "{{i.place_name}}", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
                             image : markerImage // 마커 이미지
                         });
-                        console.log("{{i.holiday_begin}}")
 
                         // 인포윈도우 생성
                         var infowindow = new kakao.maps.InfoWindow({
