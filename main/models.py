@@ -32,7 +32,7 @@ class museumDetail(models.Model):
     holiday_begin = models.TextField(null=True)
     holiday_end = models.TextField(null=True)
     close_info = models.TextField(null=True)
-    img = models.TextField()
+    img = models.TextField(db_column="img")
 
     class Meta:
         db_table = 'museum_detail'

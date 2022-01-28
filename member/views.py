@@ -9,7 +9,7 @@ from .forms import UploadFileForm
 
 def signup(request):
     if request.method == 'POST':
-        id = request.POST.get('id')
+        user_id = request.POST.get('id')
         password = request.POST.get('password')
         user_name = request.POST.get('user_name')
         
@@ -22,7 +22,7 @@ def signup(request):
             name = ''
             
         m = Member(
-            id=id, password=password, user_name=user_name, file_name = name)
+            id=user_id, password=password, user_name=user_name, file_name = name)
         m.save()
         return redirect('/member/signupcheck')
     else:
@@ -30,11 +30,11 @@ def signup(request):
 
 def login(request):
     if request.method == 'POST':
-        id = request.POST.get('id')
+        user_id = request.POST.get('id')
         password = request.POST.get('password')
 
         try:
-            m = Member.objects.get(id=id, password=password)
+            m = Member.objects.get(id=user_id, password=password)
         except Member.DoesNotExist as e:
             return render(request, 'member/loginfail.html')
         else:
