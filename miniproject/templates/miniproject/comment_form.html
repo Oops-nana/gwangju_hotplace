@@ -1,1 +1,75 @@
-<a href="{% url 'polls:comment_create' %}" class="btn btn-primary"> 등록 </a>
+<body>
+    <div class="input-group mb-3">
+      <input
+        id="comment_text"
+        type="text"
+        class="form-control"
+        placeholder="댓글을 입력해주세요"
+      />
+      별점
+      <select name="star" id="stars">
+        <option value="1" name="1">1</option>
+        <option value="2" name="2">2</option>
+        <option value="5" name="3">3</option>
+        <option value="3" name="4">4</option>
+        <option value="4" name="5">5</option>
+      </select>
+      <input type="submit" name="submit" id="submit_star_comment" />
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          var cookies = document.cookie.split(";");
+  
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+      {% comment %} 현재 위도,경도 동적으로 받아오기 {% endcomment %}
+    </script>
+  
+    <script>
+      const csrftoken = getCookie("csrftoken");
+      document
+        .querySelector("#submit_star_comment")
+        .addEventListener("click", function () {
+          let place_name = document.getElementById("placename").innerText;
+          let selectOption = document.getElementById("stars");
+          selectOptionValue =
+            selectOption.options[selectOption.selectedIndex].value;
+          console.log(selectOptionValue);
+          let selectInput = document.getElementById("comment_text");
+          selectInputValue = selectInput.value;
+          user_id = '{{request.session.user_id}}'
+  
+          if (selectOption == null && selectInputValue == "") {
+            console.log("빈칸오류");
+            return;
+          }
+          formData = new FormData();
+          formData.append("inputValue", selectInputValue);
+          formData.append("starValue", selectOptionValue);
+          formData.append("place_name", place_name);
+          {% comment %} formData.append("user_id", user_id); {% endcomment %}
+          const ajax = axios({
+            url: "/miniproject/comment/",
+            method: "post",
+            data: formData,
+            headers: {
+              "X-CSRFToken": csrftoken,
+            },
+          });
+          ajax.then(function (result) {
+            console.log(result["msg"]);
+          });
+        });
+    </script>
+  </body>
