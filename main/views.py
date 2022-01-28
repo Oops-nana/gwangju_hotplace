@@ -1,15 +1,16 @@
+
 from django.forms import model_to_dict
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 import json
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 # Exeptions
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.template import exceptions
-from .models import CommonPlace, museumDetail
+from .models import Comment, CommonPlace, museumDetail
 # 위도 lat 30 [0]
 # 경도 lng 100 [1]
 # 클라이언트에서 받아온 경도,위도 정보를 가지고 데이터베이스에 해당하는 모든 경도,위도 중 클라이언트가 설정한 범위 이내에 있는 경도 위도 세트만 반환.
@@ -123,10 +124,19 @@ def showDetails(request):
     if request.method == 'POST':
         try:
             place_name = request.POST.get('place_name')
+            if place_name == None:
+                returnAllJson = []
+                allObj = CommonPlace.objects.all()
+                for o in allObj:
+                    temp_o = model_to_dict(o)
+                    returnAllJson.append(temp_o)
+                return JsonResponse(returnAllJson, safe=False)
+            # place_name에 박물관, 갤러리가 포함된 값이면
             if isMuseumOrGallary(place_name):
-                joined = joinMuseum()
-                print(joined)  # 여기에 3000번 이상의 쿼리를 추가 조인해 넣어준다.
+                joined = joinMuseum(place_name)
+                # 여기에 place_id 3000이상의 쿼리를 추가 조인해 넣어준다.
                 return JsonResponse(joined, safe=False)
+                # return (request, 'miniproject/maps.html', joined)
 
             obj = place.objects.filter(place_name=place_name)
             returnJson = []

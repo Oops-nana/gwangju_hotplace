@@ -1,4 +1,7 @@
 from django.db import models
+from numpy import True_
+from member.models import Member
+from sqlalchemy import null
 # Create your models here.
 
 
@@ -10,7 +13,7 @@ class CommonPlace(models.Model):
     lng = models.TextField(null=True)
     road_address = models.TextField(null=True)
     info = models.BigIntegerField(null=True)
-    img = models.TextField()
+    img = models.TextField(null=True)
 
     class Meta:
         db_table = 'place_common'
@@ -32,8 +35,23 @@ class museumDetail(models.Model):
     holiday_begin = models.TextField(null=True)
     holiday_end = models.TextField(null=True)
     close_info = models.TextField(null=True)
-    img = models.TextField(db_column="img")
+    img = models.TextField(null=True)
 
     class Meta:
         db_table = 'museum_detail'
+        managed = False
+
+
+class Comment(models.Model):
+    comment_id = models.AutoField(primary_key=True)
+    content = models.CharField(max_length=100, null=True)
+    date = models.DateField(auto_now=False, auto_now_add=False, default=null)
+    id = models.ForeignKey(
+        Member, on_delete=models.CASCADE, db_column=id)
+    place_id = models.ForeignKey(
+        CommonPlace, null=True, on_delete=models.SET_NULL)
+    rate = models.IntegerField(null=True)
+
+    class Meta:
+        db_table = 'comment'
         managed = False

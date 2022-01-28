@@ -15,6 +15,9 @@ class Migration(migrations.Migration):
             name='Member',
             fields=[
                 ('id', models.CharField(db_column='id', max_length=50, primary_key=True, serialize=False, unique=True)),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('user_id', models.CharField(max_length=50, unique=True)),
                 ('password', models.CharField(max_length=50)),
                 ('user_name', models.CharField(max_length=50)),
                 ('agree', models.BooleanField()),

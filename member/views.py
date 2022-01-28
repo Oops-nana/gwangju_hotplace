@@ -7,6 +7,7 @@ from .models import Member
 from django.http import HttpResponse
 from .forms import UploadFileForm
 
+
 def signup(request):
     if request.method == 'POST':
         user_id = request.POST.get('id')
@@ -59,12 +60,4 @@ def loginfail(request):
 def signupcheck(request):
     return render(request, 'member/signupcheck.html')
 
-from django.views.decorators.http import require_POST
 
-
-def delete(request):
-    user = request.user
-    user.delete()
-    logout(request)
-    context = {}
-    return render(request, 'member/signupcheckup.html', context)

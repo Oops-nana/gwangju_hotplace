@@ -9,4 +9,5 @@ urlpatterns = [
     path('session/', views.login_session, name='session'),
     path('logout/', views.logout, name='logout'),
     path('index/', views.index, name='index'),
+    path('comment/', views.postCommentAndStar, name='comment'),
 ]
