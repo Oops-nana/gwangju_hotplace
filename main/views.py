@@ -23,14 +23,8 @@ def dictToJson(jsondata):
     return returnJson
 
 
-<<<<<<< HEAD
 def joinMuseum(target: str):
     sql = f"select * from place_common as p left join museum_detail as m on p.place_id = m.place_id where p.place_id >= 3000 and m.place_id >= 3000 and p.place_name='{target}';"
-=======
-def joinMuseum():
-
-    sql = "select * from place_common as p left join museum_detail as m on p.place_id = m.place_id where p.place_id >= 3000 and m.place_id >= 3000;"
->>>>>>> origin/ccc
 
     cursor = connection.cursor()
     cursor.execute(sql)

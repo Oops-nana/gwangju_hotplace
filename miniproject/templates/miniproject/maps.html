@@ -60,7 +60,7 @@
         <div class="logout" type="button" name="">
           <button type="submit" class="logout-btn">
             <i class="fas fa-sign-out-alt">
-              {% if request.session.user_id %}
+              {% if request.session.id %}
               {{ request.session.user_name }} 님
               {% else %}
                 <p>  Guest</p>
