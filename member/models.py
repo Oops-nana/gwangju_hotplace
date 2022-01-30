@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Member(models.Model):
     id = models.CharField(max_length=50, unique=True,
                           db_column='id', primary_key=True)
@@ -13,3 +12,6 @@ class Member(models.Model):
         db_table = 'user'
         app_label = 'member'
         managed = False
+        
+class UploadFile(models.Model):
+    file = models.FileField(upload_to='%Y/%m/%d')

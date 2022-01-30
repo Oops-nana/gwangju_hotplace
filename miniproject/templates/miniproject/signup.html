@@ -18,7 +18,9 @@
 	<h4 class="card-title mt-2">회원가입</h4>
 </header>
 <article class="card-body">
-<form>
+<form method="post" class="post-form">
+    {% csrf_token %}
+    {% include "form_errors.html" %}
 	<div class="form-row">
 		<div class="col form-group">
 			<label>이름 </label>   
@@ -38,16 +40,6 @@
 		<input type="email" class="form-control" placeholder="">
 		<small class="form-text text-muted">타인에게 정보가 노출되지 않습니다.</small>
 	</div> <!-- form-group end.// -->
-    	<div class="form-group">
-            <label>성별</label><br>
-			<label class="form-check form-check-inline">
-		  <input class="form-check-input" type="radio" name="gender" value="option1">
-		  <span class="form-check-label"> 남자 </span>
-		</label>
-		<label class="form-check form-check-inline">
-		  <input class="form-check-input" type="radio" name="gender" value="option2">
-		  <span class="form-check-label"> 여자</span>
-		</label><br>
         <div class="form-row">
             <div class="form-group col-md-6">
               <label>위치정보이용 동의</label>
@@ -56,31 +48,7 @@
                 <option>X</option>
               </select>
             </div> <!-- form-group end.// -->
-
 	</div> <!-- form-group end.// -->
-	<div class="form-row">
-		<div class="form-group col-md-6">
-		  <label>지역</label>
-		  <select id="inputState" class="form-control">
-		    <option>서울특별시</option>
-		      <option>부산광역시</option>
-		      <option>대구광역시</option>
-              <option>인천광역시</option>
-		      <option selected="">광주광역시</option>
-		      <option>대전광역시</option>
-		      <option>세종특별자치시</option>
-              <option>경기도</option>
-              <option>강원도</option>
-              <option>충청북도</option>
-              <option>충청남도</option>
-              <option>전라북도</option>
-              <option>전라남도</option>
-              <option>경상북도</option>
-              <option>경상남도</option>
-              <option>제주특별자치도</option>
-		  </select>
-		</div> <!-- form-group end.// -->
-    </div>
         <div class="form-group col-md-6">
         <label>대표 이미지</label><br>
         <body> 

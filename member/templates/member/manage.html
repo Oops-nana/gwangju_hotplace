@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>회원가입</title>
+    <title>회원 정보 수정</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Open+Sans"
@@ -13,30 +13,33 @@
   <body>
     
     <!-- partial:index.partial.html -->
-    <p class="tip">회원가입을 해주세요.</p>
+    <p class="tip">로그인 또는 회원가입을 해주세요.</p>
     <div class="cont">
       <form method="post" enctype = "multipart/form-data">
         {% csrf_token %}
       <div class="form sign-in">
-          <h2>환영합니다!</h2>
+        <img src='{{ uploadFile.file.url }}' width='50%'>
           <label>
             <span>이름</span>
             <input type="text" name='user_name'/>
           </label>
           <label>
             <span>ID</span>
-            <input type="text" name="id"/>
+            <input type="text" name="user_id"/>
           </label>
           <label>
             <span>비밀번호</span>
             <input type="password" name="password"/>
           </label>
           <label>
-            <span>프로필 사진</span>
+            <span>파일</span>
             <input type="file" name="file">
           </label>
-          <button type="submit" class="submit">회원가입</button>
-        </div>
+          <button type="submit" class="submit">회원 정보 수정</button>
+
+        <div class="card card-body">
+            <a class="btn" href="{% url 'member:manage' %}">회원탈퇴</a>
+          </div>        </div>
       </form>
       <div class="sub-cont">
         <div class="img">
